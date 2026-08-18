@@ -1,0 +1,107 @@
+{
+  "gaps": [
+    {
+      "type": "unmatched-local",
+      "category": "sofas",
+      "folder": "25_04_2025_SOFA1TO10",
+      "slots": [],
+      "count": 0
+    },
+    {
+      "type": "unmatched-local",
+      "category": "sofas",
+      "folder": "Arce╠ü Curve Sofa",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "count": 5
+    },
+    {
+      "type": "slot-gap",
+      "category": "sofas",
+      "folder": "NOVA MODULAR SOFA",
+      "slug": "nova-modular-sofa",
+      "score": 100,
+      "localSlots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "dbSlots": [
+        1,
+        4,
+        5
+      ],
+      "missingSlots": [
+        2,
+        3
+      ],
+      "extraInDb": [],
+      "localCount": 5,
+      "dbCount": 3,
+      "dbFiles": [
+        "4_vdutq8.jpg",
+        "1_nbi3ia.jpg",
+        "5_x9ifeu.png"
+      ]
+    },
+    {
+      "type": "slot-gap",
+      "category": "sofas",
+      "folder": "SERENE CURVE SOFA",
+      "slug": "serene-curve-sofa",
+      "score": 100,
+      "localSlots": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "dbSlots": [
+        1,
+        3,
+        4,
+        5,
+        6
+      ],
+      "missingSlots": [
+        2
+      ],
+      "extraInDb": [],
+      "localCount": 6,
+      "dbCount": 5,
+      "dbFiles": [
+        "4_dauwyr.webp",
+        "1_j86ajt.webp",
+        "5_osnu6w.webp",
+        "3_ctnzbk.webp",
+        "6_ii1dbj.png"
+      ]
+    },
+    {
+      "type": "unmatched-local",
+      "category": "beds",
+      "folder": "NOIREü Arch Panel Bed",
+      "slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "count": 5
+    }
+  ],
+  "dbOnly": [
+    "arc-curve-sofa",
+    "noire-arch-panel-bed"
+  ]
+}

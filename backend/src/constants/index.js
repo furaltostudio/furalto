@@ -1,0 +1,20 @@
+const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+  SERVICE_UNAVAILABLE: 503,
+};
+
+const API_PREFIX = "/api/v1";
+const { USER_ROLES, STAFF_ROLES } = require("./roles");
+
+module.exports = {
+  HTTP_STATUS,
+  API_PREFIX,
+  USER_ROLES,
+  STAFF_ROLES,
+};

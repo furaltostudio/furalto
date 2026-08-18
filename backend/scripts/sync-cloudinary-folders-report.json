@@ -1,0 +1,517 @@
+{
+  "dryRun": true,
+  "updated": 0,
+  "addedImages": 0,
+  "report": [
+    {
+      "folderPath": "furalto/Furalto_Sofa/Aero Curve Sofa",
+      "slug": "aero-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Arce Curve Sofa",
+      "slug": "arc-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/ARCELLA SOFA",
+      "slug": "arcella-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/ARCUS SOFA",
+      "slug": "arcus-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/AURA VEIL SOFA",
+      "slug": "aura-veil-sofa",
+      "score": 100,
+      "cloudinaryCount": 8,
+      "dbCount": 8,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/AURELIA Shell Sofa",
+      "slug": "aurelia-shell-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Aureo Curve Sofa",
+      "slug": "aureo-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Cloud Curve Sofa",
+      "slug": "cloud-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 7,
+      "dbCount": 7,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/CLOUD EMBRACE LOUNGE SET",
+      "slug": "cloud-embrace-lounge-set",
+      "score": 100,
+      "cloudinaryCount": 7,
+      "dbCount": 7,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/CLOUD WAVE SOFA",
+      "slug": "cloud-wave-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Flowline Sofa",
+      "slug": "flowline-sofa",
+      "score": 100,
+      "cloudinaryCount": 8,
+      "dbCount": 8,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Linea Lounge Modular Sofa",
+      "slug": "linea-lounge-modular-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Linear Luxe Sofa",
+      "slug": "linear-luxe-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/LUNA CLOUD CURVE SOFA",
+      "slug": "luna-cloud-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 6,
+      "dbCount": 6,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Luna Curve Chaise Sofa",
+      "slug": "luna-curve-chaise-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/LUNA Curve Lounge SOFA",
+      "slug": "luna-curve-lounge-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/LUNARA ARC SOFA",
+      "slug": "lunara-arc-sofa",
+      "score": 100,
+      "cloudinaryCount": 6,
+      "dbCount": 6,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Milano Modular Sofa",
+      "slug": "milano-modular-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/MONO BLOCK SOFA",
+      "slug": "mono-block-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/NOIR LUXE SOFA",
+      "slug": "noir-luxe-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/NOVA Lounge Sofa",
+      "slug": "nova-lounge-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/NOVA MODULAR SOFA",
+      "slug": "nova-modular-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/RIBELLA SOFA",
+      "slug": "ribella-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/SERENE CURVE SOFA",
+      "slug": "serene-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 6,
+      "dbCount": 6,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Sienna Luxe 3-Seater Sofa",
+      "slug": "sienna-luxe-3-seater-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/TERRA CURVE SOFA",
+      "slug": "terra-curve-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Urban Loft Sofa",
+      "slug": "urban-loft-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/VELORA Lounge Sofa",
+      "slug": "velora-lounge-sofa",
+      "score": 100,
+      "cloudinaryCount": 4,
+      "dbCount": 4,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/VELTORE SOFA",
+      "slug": "veltore-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Verde Orbit Curved Sofa",
+      "slug": "verde-orbit-curved-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/VERDON Sofa",
+      "slug": "verdon-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Sofa/Verona Lounge Modular Sofa",
+      "slug": "verona-lounge-modular-sofa",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/AERIS BED",
+      "slug": "aeris-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Aeris Upholstered Bed",
+      "resources": 5,
+      "unmatched": true,
+      "bestScore": 0
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/AURA SOFTLINE BED",
+      "slug": "aura-softline-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/AURELIA FRAME BED",
+      "slug": "aurelia-frame-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Aurelia Wing Bed",
+      "slug": "aurelia-wing-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Aurelio Panel Bed",
+      "slug": "aurelio-panel-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/AURELIO WING BED",
+      "slug": "aurelio-wing-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Aurelle Bed",
+      "slug": "aurelle-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/AURUM SOFT EDGE BED",
+      "slug": "aurum-soft-edge-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/DUO ARC BED",
+      "slug": "duo-arc-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/GridLounge Bed",
+      "slug": "gridlounge-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Linear Edge Bed",
+      "slug": "linear-edge-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/LUMINA ARC BED",
+      "slug": "lumina-arc-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/LUNA ORBIT BED",
+      "slug": "luna-orbit-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Montero Bed",
+      "slug": "montero-bed",
+      "score": 100,
+      "cloudinaryCount": 4,
+      "dbCount": 4,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Noir Haven Bed",
+      "slug": "noir-haven-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/NOIR SHELL BED",
+      "slug": "noir-shell-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/NOIRÉ Arch Panel Bed",
+      "slug": "noire-arch-panel-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/NOVA EDGE BED",
+      "slug": "nova-edge-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/NOVA RADIANT BED",
+      "slug": "nova-radiant-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/NOVARA PANEL BED",
+      "slug": "novara-panel-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Obsidian Block Bed",
+      "slug": "obsidian-block-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/Terra Block Bed",
+      "slug": "terra-block-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/VELORA LAYER BED",
+      "slug": "velora-layer-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    },
+    {
+      "folderPath": "furalto/Furalto_Bed/VERDA SOFTEDGE BED",
+      "slug": "verda-softedge-bed",
+      "score": 100,
+      "cloudinaryCount": 5,
+      "dbCount": 5,
+      "missingCount": 0,
+      "missingFiles": []
+    }
+  ]
+}

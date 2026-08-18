@@ -1,0 +1,409 @@
+[
+  {
+    "slug": "luna-orbit-bed",
+    "current": "4v_kxwpgi.jpg",
+    "currentScore": "100.4",
+    "currentWhite": "0.00",
+    "best": "1v_ximulo.jpg",
+    "bestScore": "124.6",
+    "bestWhite": "0.02",
+    "needsChange": true,
+    "ranked": [
+      "1v_ximulo.jpg:125(w2%)",
+      "4v_kxwpgi.jpg:100(w0%)",
+      "3v_dj0jqn.jpg:100(w0%)",
+      "2v_o5xt54.jpg:100(w0%)",
+      "5_vwtp73.png:7(w56%)"
+    ]
+  },
+  {
+    "slug": "aurelia-frame-bed",
+    "current": "4_i6jhbh.jpg",
+    "currentScore": "102.6",
+    "currentWhite": "0.03",
+    "best": "4_i6jhbh.jpg",
+    "bestScore": "102.6",
+    "bestWhite": "0.03",
+    "needsChange": false,
+    "ranked": [
+      "4_i6jhbh.jpg:103(w3%)",
+      "3_ptnlaz.jpg:-8(w68%)",
+      "2_oojct6.jpg:-11(w74%)",
+      "5_kaubw6.png:-4(w66%)",
+      "1_aeztqd.jpg:-19(w79%)"
+    ]
+  },
+  {
+    "slug": "nova-radiant-bed",
+    "current": "4_hqq41p.jpg",
+    "currentScore": "-21.5",
+    "currentWhite": "0.81",
+    "best": "1_u305l6.jpg",
+    "bestScore": "102.5",
+    "bestWhite": "0.03",
+    "needsChange": true,
+    "ranked": [
+      "1_u305l6.jpg:103(w3%)",
+      "5_ac1k6e.png:0(w62%)",
+      "4_hqq41p.jpg:-21(w81%)",
+      "2_pns3js.jpg:-28(w88%)",
+      "3_qnj0fs.jpg:-32(w92%)"
+    ]
+  },
+  {
+    "slug": "aura-softline-bed",
+    "current": "4_szejiu.jpg",
+    "currentScore": "-22.5",
+    "currentWhite": "0.83",
+    "best": "1_o5noue.jpg",
+    "bestScore": "100.4",
+    "bestWhite": "0.07",
+    "needsChange": true,
+    "ranked": [
+      "1_o5noue.jpg:100(w7%)",
+      "5_yzx6jy.png:7(w56%)",
+      "4_szejiu.jpg:-22(w83%)",
+      "2_ezmuwk.jpg:-30(w90%)",
+      "3_mepgpm.jpg:-31(w92%)"
+    ]
+  },
+  {
+    "slug": "nova-edge-bed",
+    "current": "4_p4ecnw.jpg",
+    "currentScore": "131.2",
+    "currentWhite": "0.02",
+    "best": "4_p4ecnw.jpg",
+    "bestScore": "131.2",
+    "bestWhite": "0.02",
+    "needsChange": false,
+    "ranked": [
+      "4_p4ecnw.jpg:131(w2%)",
+      "5_hx16oa.png:3(w60%)",
+      "3_zxt2yj.jpg:-27(w87%)",
+      "1_kk1dpa.jpg:-30(w90%)",
+      "2_fq5zww.jpg:-34(w94%)"
+    ]
+  },
+  {
+    "slug": "aeris-bed",
+    "current": "4_frdxvm.jpg",
+    "currentScore": "-26.0",
+    "currentWhite": "0.86",
+    "best": "1_gtoebn.jpg",
+    "bestScore": "130.3",
+    "bestWhite": "0.00",
+    "needsChange": true,
+    "ranked": [
+      "1_gtoebn.jpg:130(w0%)",
+      "5_rxb4xp.png:3(w60%)",
+      "4_frdxvm.jpg:-26(w86%)",
+      "2_vwvn5k.jpg:-28(w88%)",
+      "3_sdiwef.jpg:-29(w89%)"
+    ]
+  },
+  {
+    "slug": "noire-arch-panel-bed",
+    "current": "4_hkubdu.jpg",
+    "currentScore": "131.7",
+    "currentWhite": "0.04",
+    "best": "4_hkubdu.jpg",
+    "bestScore": "131.7",
+    "bestWhite": "0.04",
+    "needsChange": false,
+    "ranked": [
+      "4_hkubdu.jpg:132(w4%)",
+      "5_ver3j8.png:0(w62%)",
+      "1_kpktv3.jpg:-25(w85%)",
+      "3_nqcgnt.jpg:-26(w86%)",
+      "2_wwhrbf.jpg:-28(w88%)"
+    ]
+  },
+  {
+    "slug": "aurum-soft-edge-bed",
+    "current": "4_lzwfhc.jpg",
+    "currentScore": "100.0",
+    "currentWhite": "0.00",
+    "best": "1_lnvmz3.jpg",
+    "bestScore": "130.9",
+    "bestWhite": "0.02",
+    "needsChange": true,
+    "ranked": [
+      "1_lnvmz3.jpg:131(w2%)",
+      "2_xcyrdf.jpg:100(w0%)",
+      "4_lzwfhc.jpg:100(w0%)",
+      "3_evfzso.jpg:98(w2%)",
+      "5_fumkvb.png:7(w55%)"
+    ]
+  },
+  {
+    "slug": "aurelle-bed",
+    "current": "4_aiylhz.jpg",
+    "currentScore": "100.0",
+    "currentWhite": "0.00",
+    "best": "1_jg7svr.jpg",
+    "bestScore": "128.8",
+    "bestWhite": "0.02",
+    "needsChange": true,
+    "ranked": [
+      "1_jg7svr.jpg:129(w2%)",
+      "4_aiylhz.jpg:100(w0%)",
+      "2_psaibq.jpg:97(w3%)",
+      "3_exvas4.jpg:96(w4%)",
+      "5_rgfhvs.png:-1(w63%)"
+    ]
+  },
+  {
+    "slug": "montero-bed",
+    "current": "4_h0cdwb.jpg",
+    "currentScore": "98.9",
+    "currentWhite": "0.01",
+    "best": "1_npjtff.jpg",
+    "bestScore": "102.8",
+    "bestWhite": "0.00",
+    "needsChange": false,
+    "ranked": [
+      "1_npjtff.jpg:103(w0%)",
+      "4_h0cdwb.jpg:99(w1%)",
+      "2_aswegm.jpg:86(w15%)",
+      "3_slfphk.jpg:74(w26%)"
+    ]
+  },
+  {
+    "slug": "gridlounge-bed",
+    "current": "4_waxh6z.jpg",
+    "currentScore": "100.1",
+    "currentWhite": "0.00",
+    "best": "1_hazrth.jpg",
+    "bestScore": "128.5",
+    "bestWhite": "0.01",
+    "needsChange": true,
+    "ranked": [
+      "1_hazrth.jpg:129(w1%)",
+      "4_waxh6z.jpg:100(w0%)",
+      "2_xbu0dk.jpg:100(w0%)",
+      "3_p2jq4t.jpg:100(w0%)",
+      "5_akjl3v.png:-4(w65%)"
+    ]
+  },
+  {
+    "slug": "aurelia-wing-bed",
+    "current": "4_niflol.jpg",
+    "currentScore": "92.3",
+    "currentWhite": "0.08",
+    "best": "2_kk4e8b.jpg",
+    "bestScore": "149.7",
+    "bestWhite": "0.00",
+    "needsChange": true,
+    "ranked": [
+      "2_kk4e8b.jpg:150(w0%)",
+      "4_niflol.jpg:92(w8%)",
+      "3_ch19fr.jpg:84(w16%)",
+      "1_qxeish.jpg:81(w19%)",
+      "5_t3omdf.png:80(w58%)"
+    ]
+  },
+  {
+    "slug": "novara-panel-bed",
+    "current": "4_kiautr.jpg",
+    "currentScore": "-23.3",
+    "currentWhite": "0.83",
+    "best": "1_gpaorz.jpg",
+    "bestScore": "137.7",
+    "bestWhite": "0.05",
+    "needsChange": true,
+    "ranked": [
+      "1_gpaorz.jpg:138(w5%)",
+      "5_ungkdb.png:78(w57%)",
+      "4_kiautr.jpg:-23(w83%)",
+      "2_u8mia1.jpg:-24(w84%)",
+      "3_bbmzys.jpg:-31(w91%)"
+    ]
+  },
+  {
+    "slug": "lumina-arc-bed",
+    "current": "4_he1ylt.jpg",
+    "currentScore": "-30.9",
+    "currentWhite": "0.91",
+    "best": "1_gxn2dc.jpg",
+    "bestScore": "124.5",
+    "bestWhite": "0.05",
+    "needsChange": true,
+    "ranked": [
+      "1_gxn2dc.jpg:125(w5%)",
+      "5_xvma4p.png:28(w60%)",
+      "2_zpzo9y.jpg:-28(w88%)",
+      "3_i3d6ar.jpg:-29(w89%)",
+      "4_he1ylt.jpg:-31(w91%)"
+    ]
+  },
+  {
+    "slug": "aurelio-wing-bed",
+    "current": "4_lv8vth.jpg",
+    "currentScore": "-21.1",
+    "currentWhite": "0.81",
+    "best": "1_yleygr.jpg",
+    "bestScore": "140.7",
+    "bestWhite": "0.02",
+    "needsChange": true,
+    "ranked": [
+      "1_yleygr.jpg:141(w2%)",
+      "5_kdynb4.png:84(w62%)",
+      "2_obcgv7.jpg:-20(w80%)",
+      "4_lv8vth.jpg:-21(w81%)",
+      "3_ud1rll.jpg:-28(w88%)"
+    ]
+  },
+  {
+    "slug": "velora-layer-bed",
+    "current": "4_a76jlf.jpg",
+    "currentScore": "-19.0",
+    "currentWhite": "0.79",
+    "best": "1_d6e7ba.jpg",
+    "bestScore": "140.3",
+    "bestWhite": "0.03",
+    "needsChange": true,
+    "ranked": [
+      "1_d6e7ba.jpg:140(w3%)",
+      "5_vcbibn.png:80(w63%)",
+      "4_a76jlf.jpg:-19(w79%)",
+      "3_piy8n6.jpg:-20(w80%)",
+      "2_entpvs.jpg:-28(w88%)"
+    ]
+  },
+  {
+    "slug": "duo-arc-bed",
+    "current": "4_hpg6re.jpg",
+    "currentScore": "-22.9",
+    "currentWhite": "0.84",
+    "best": "1_t7wfow.jpg",
+    "bestScore": "140.5",
+    "bestWhite": "0.02",
+    "needsChange": true,
+    "ranked": [
+      "1_t7wfow.jpg:140(w2%)",
+      "5_czm5k4.png:75(w66%)",
+      "4_hpg6re.jpg:-23(w84%)",
+      "3_feryvf.jpg:-31(w92%)",
+      "2_pe95lq.jpg:-31(w91%)"
+    ]
+  },
+  {
+    "slug": "noir-shell-bed",
+    "current": "4_nzdx56.jpg",
+    "currentScore": "92.0",
+    "currentWhite": "0.08",
+    "best": "1_z1zqrg.jpg",
+    "bestScore": "133.7",
+    "bestWhite": "0.09",
+    "needsChange": true,
+    "ranked": [
+      "1_z1zqrg.jpg:134(w9%)",
+      "4_nzdx56.jpg:92(w8%)",
+      "5_lk3xyf.png:85(w67%)",
+      "2_wgazof.jpg:76(w24%)",
+      "3_idn6kj.jpg:75(w26%)"
+    ]
+  },
+  {
+    "slug": "aurelio-panel-bed",
+    "current": "4_g2ben0.jpg",
+    "currentScore": "99.8",
+    "currentWhite": "0.00",
+    "best": "1_oushhh.jpg",
+    "bestScore": "153.1",
+    "bestWhite": "0.01",
+    "needsChange": true,
+    "ranked": [
+      "1_oushhh.jpg:153(w1%)",
+      "3_hehowx.jpg:100(w0%)",
+      "2_prslxx.jpg:100(w0%)",
+      "4_g2ben0.jpg:100(w0%)",
+      "5_l54424.png:88(w64%)"
+    ]
+  },
+  {
+    "slug": "noir-haven-bed",
+    "current": "4_lbi3ok.jpg",
+    "currentScore": "100.0",
+    "currentWhite": "0.00",
+    "best": "1_pwkqko.jpg",
+    "bestScore": "155.4",
+    "bestWhite": "0.00",
+    "needsChange": true,
+    "ranked": [
+      "1_pwkqko.jpg:155(w0%)",
+      "2_bygvoi.jpg:100(w0%)",
+      "4_lbi3ok.jpg:100(w0%)",
+      "3_na7ma1.jpg:89(w11%)",
+      "5_zl3u5y.png:85(w67%)"
+    ]
+  },
+  {
+    "slug": "verda-softedge-bed",
+    "current": "4_egszcc.jpg",
+    "currentScore": "100.2",
+    "currentWhite": "0.00",
+    "best": "1_tx2wjv.jpg",
+    "bestScore": "105.2",
+    "bestWhite": "0.01",
+    "needsChange": false,
+    "ranked": [
+      "1_tx2wjv.jpg:105(w1%)",
+      "3_apuhsa.jpg:100(w0%)",
+      "2_fwguhw.jpg:100(w0%)",
+      "4_egszcc.jpg:100(w0%)",
+      "5_lj1my1.png:-3(w64%)"
+    ]
+  },
+  {
+    "slug": "terra-block-bed",
+    "current": "4_aawhzp.jpg",
+    "currentScore": "100.5",
+    "currentWhite": "0.00",
+    "best": "1_ccjf67.jpg",
+    "bestScore": "127.6",
+    "bestWhite": "0.05",
+    "needsChange": true,
+    "ranked": [
+      "1_ccjf67.jpg:128(w5%)",
+      "3_s1pkyk.jpg:100(w0%)",
+      "4_aawhzp.jpg:100(w0%)",
+      "2_zka8y2.jpg:100(w0%)",
+      "5_tcdeca.png:76(w66%)"
+    ]
+  },
+  {
+    "slug": "linear-edge-bed",
+    "current": "4_piskw2.jpg",
+    "currentScore": "-30.0",
+    "currentWhite": "0.90",
+    "best": "1_bqpltl.jpg",
+    "bestScore": "128.5",
+    "bestWhite": "0.03",
+    "needsChange": true,
+    "ranked": [
+      "1_bqpltl.jpg:129(w3%)",
+      "5_qfq4ij.png:-7(w69%)",
+      "4_piskw2.jpg:-30(w90%)",
+      "3_j9f2ce.jpg:-31(w91%)",
+      "2_hpyjis.jpg:-31(w91%)"
+    ]
+  },
+  {
+    "slug": "obsidian-block-bed",
+    "current": "4_xcwj9u.jpg",
+    "currentScore": "-24.8",
+    "currentWhite": "0.85",
+    "best": "1_nxcrup.jpg",
+    "bestScore": "122.5",
+    "bestWhite": "0.01",
+    "needsChange": true,
+    "ranked": [
+      "1_nxcrup.jpg:122(w1%)",
+      "5_fa6sr9.png:84(w61%)",
+      "4_xcwj9u.jpg:-25(w85%)",
+      "2_sfkxsl.jpg:-28(w88%)",
+      "3_x5ofpe.jpg:-30(w90%)"
+    ]
+  }
+]

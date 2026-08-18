@@ -1,0 +1,324 @@
+[
+  {
+    "key": "page.about",
+    "title": "About",
+    "type": "page",
+    "description": "Edit the About page content shown on the website.",
+    "path": "/about",
+    "data": {
+      "eyebrow": "About Us",
+      "title": "A Legacy Reborn Through Craftsmanship",
+      "description": "Furalto is more than a furniture brand — a story of legacy, courage, and craftsmanship carried across generations. Crafted with heart. Built on legacy.",
+      "sections": [
+        {
+          "title": "Our Story",
+          "body": "Our journey began in 1979, with Late Ramchandar, a highly respected master carpenter who led a team of more than 100 skilled craftsmen. His workshop was known for precision, integrity, and the kind of artistry that could only come from a lifetime of dedication. For decades, he shaped wood into beautiful, functional pieces that became a part of countless homes. But life took an unexpected turn. A sudden paralysis brought everything to a halt, and the dream he built slowly began to collapse. In 2022, we lost him — but his craft, his passion, and his vision remained alive in the hearts of those he inspired."
+        },
+        {
+          "title": "The Birth of Furalto",
+          "body": "I am Gayatri, his daughter and the founder of Furalto. Furalto was created as a tribute to him — a promise to complete the dream he could not finish. I grew up watching my father create magic with his hands. Today, I carry that same spirit forward by bringing together India’s finest artisans, designers, and craftsmen to build premium, thoughtfully designed furniture that reflects heritage, skill, and modern luxury."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.promotions",
+    "title": "Promotions",
+    "type": "page",
+    "description": "Edit the Promotions page content shown on the website.",
+    "path": "/promotions",
+    "data": {
+      "eyebrow": "Current Offers",
+      "title": "Seasonal Promotions",
+      "description": "Enjoy 20% off orders of ₹2,00,000 or more on select collections for a limited time.",
+      "sections": [
+        {
+          "title": "Seasonal Promotions",
+          "body": "Save on sofas, sectionals, dining tables, and lighting through the end of the season. Exclusions apply to clearance and open-box items."
+        },
+        {
+          "title": "Outdoor Terrace Edit",
+          "body": "Complimentary outdoor fabric protection on all Riviera and Arc Outdoor orders placed this month."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.trade-program",
+    "title": "Trade Program",
+    "type": "page",
+    "description": "Edit the Trade Program page content shown on the website.",
+    "path": "/trade-program",
+    "data": {
+      "eyebrow": "For Professionals",
+      "title": "Trade Program",
+      "description": "Exclusive pricing, dedicated support, and priority access for interior designers and architects.",
+      "heroImageSrc": "/home/furnitures_four.jpeg",
+      "heroImageAlt": "Open-plan dining and living space with marble accents",
+      "sections": [
+        {
+          "title": "Trade Program",
+          "body": "The Furalto Trade Program is built for designers, architects, and hospitality specifiers who need responsive support and preferential access."
+        },
+        {
+          "title": "Project Services",
+          "body": "From space planning to white-glove installation, our trade specialists support residential and hospitality projects across India."
+        },
+        {
+          "title": "Who Qualifies",
+          "body": "Membership is available to licensed interior designers, architects, builders, and qualified design professionals with active project portfolios."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.shipping",
+    "title": "Shipping & Delivery",
+    "type": "page",
+    "description": "Edit the Shipping & Delivery page content shown on the website.",
+    "path": "/shipping",
+    "data": {
+      "eyebrow": "Customer Care",
+      "title": "Shipping & Delivery",
+      "description": "White-glove delivery and professional installation available across India.",
+      "sections": [
+        {
+          "title": "Shipping & Delivery",
+          "body": "Our delivery team unpacks, assembles, and places each piece in your chosen room. Packaging is removed and recycled."
+        },
+        {
+          "title": "Lead Times",
+          "body": "Delivery timelines vary by product type, finish selection, and your location."
+        },
+        {
+          "title": "Delivery Coverage",
+          "body": "We deliver to major metros and select tier-2 cities across India. Remote locations may require additional lead time."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.returns",
+    "title": "Returns & Exchanges",
+    "type": "page",
+    "description": "Edit the Returns & Exchanges page content shown on the website.",
+    "path": "/returns",
+    "data": {
+      "eyebrow": "Customer Care",
+      "title": "Returns & Exchanges",
+      "description": "We stand behind the quality of every Furalto piece with a considered returns policy.",
+      "sections": [
+        {
+          "title": "Returns & Exchanges",
+          "body": "Eligible non-custom items may be returned within 30 days of delivery in original condition."
+        },
+        {
+          "title": "Custom & Made-to-Order",
+          "body": "Bespoke upholstery, custom finishes, and made-to-order case goods are final sale. Our team confirms all specifications before production."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.privacy",
+    "title": "Privacy Policy",
+    "type": "page",
+    "description": "Edit the Privacy Policy page content shown on the website.",
+    "path": "/privacy",
+    "data": {
+      "eyebrow": "Legal",
+      "title": "Privacy Policy",
+      "description": "How Furalto collects, uses, and protects your personal information.",
+      "sections": [
+        {
+          "title": "Privacy Policy",
+          "body": "We collect information you provide directly and data generated when you use our website and services."
+        },
+        {
+          "title": "How We Use Your Data",
+          "body": "Your information helps us deliver a seamless luxury shopping and design experience."
+        },
+        {
+          "title": "Cookies & Analytics",
+          "body": "We use cookies and similar technologies to remember preferences, measure traffic, and understand how visitors explore collections."
+        },
+        {
+          "title": "Sharing Your Information",
+          "body": "We do not sell your personal information. We share data only with trusted partners who help us operate our business."
+        },
+        {
+          "title": "Your Rights",
+          "body": "Depending on your location, you may have rights to access, correct, delete, or restrict use of your personal data."
+        },
+        {
+          "title": "Contact Us",
+          "body": "For privacy questions or data requests, reach out to our customer care team. We respond within 5 business days."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.terms",
+    "title": "Terms of Use",
+    "type": "page",
+    "description": "Edit the Terms of Use page content shown on the website.",
+    "path": "/terms",
+    "data": {
+      "eyebrow": "Legal",
+      "title": "Terms of Use",
+      "description": "Terms governing your use of the Furalto website and services.",
+      "sections": [
+        {
+          "title": "Terms of Use",
+          "body": "By accessing furalto.com, you agree to these terms. Content on this site is provided for personal, non-commercial use unless otherwise stated."
+        },
+        {
+          "title": "Orders & Pricing",
+          "body": "All prices are listed in Indian Rupees unless noted. Taxes, delivery fees, and installation charges may apply at checkout."
+        },
+        {
+          "title": "Intellectual Property",
+          "body": "Furalto trademarks, photography, product designs, and editorial content remain the property of Furalto or its licensors."
+        },
+        {
+          "title": "Limitation of Liability",
+          "body": "To the fullest extent permitted by law, Furalto is not liable for indirect, incidental, or consequential damages arising from site use or product delays beyond our reasonable control."
+        },
+        {
+          "title": "Governing Law",
+          "body": "These terms are governed by the laws of India. Disputes shall be subject to the exclusive jurisdiction of courts in Mumbai, Maharashtra."
+        },
+        {
+          "title": "Questions",
+          "body": "If you have questions about these terms, our customer care team is available by phone, email, or showroom visit."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.sustainability",
+    "title": "Sustainability",
+    "type": "page",
+    "description": "Edit the Sustainability page content shown on the website.",
+    "path": "/sustainability",
+    "data": {
+      "eyebrow": "Our Commitment",
+      "title": "Sustainability",
+      "description": "Responsible sourcing and enduring design — furniture built to last, in the spirit of a master’s workshop.",
+      "heroImageSrc": "/home/furnitures_one.jpeg",
+      "heroImageAlt": "Natural materials and enduring outdoor furniture in soft evening light",
+      "sections": [
+        {
+          "title": "Sustainability",
+          "body": "We prioritize materials selected for longevity, traceability, and reduced environmental impact across every collection."
+        },
+        {
+          "title": "Built to Last",
+          "body": "Furniture designed for decades — not seasons. Repairable construction and timeless silhouettes reduce waste over time."
+        },
+        {
+          "title": "Mindful Operations",
+          "body": "From packaging reduction to showroom energy practices, we continually refine how we deliver luxury with less waste."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.careers",
+    "title": "Careers",
+    "type": "page",
+    "description": "Edit the Careers page content shown on the website.",
+    "path": "/careers",
+    "data": {
+      "eyebrow": "Join Us",
+      "title": "Careers at Furalto",
+      "description": "Build exceptional experiences with a team passionate about design, craft, and hospitality.",
+      "heroImageSrc": "/home/furnitures_five.jpeg",
+      "heroImageAlt": "Premium living room with cream upholstered seating",
+      "sections": [
+        {
+          "title": "Careers at Furalto",
+          "body": "We are hiring design consultants, client experience specialists, and operations roles for our Delhi atelier and pan-India delivery."
+        },
+        {
+          "title": "Our Culture",
+          "body": "A collaborative environment carrying a father’s craft into a national brand — where heritage skill meets contemporary design. We invest in training and long-term career growth."
+        },
+        {
+          "title": "Benefits",
+          "body": "Competitive compensation, employee product programs, and opportunities to grow within a design-led organization."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.sale-terms",
+    "title": "Sale Terms",
+    "type": "page",
+    "description": "Edit the Sale Terms page content shown on the website.",
+    "path": "/sale-terms",
+    "data": {
+      "eyebrow": "Sale",
+      "title": "Sale Terms",
+      "description": "Terms and conditions for promotional and clearance purchases.",
+      "sections": [
+        {
+          "title": "Sale Terms",
+          "body": "Sale and promotional offers are valid for a limited time and may change without notice."
+        },
+        {
+          "title": "Clearance & Open Box",
+          "body": "Clearance, floor sample, and open-box merchandise is sold as-is and is final sale."
+        },
+        {
+          "title": "Exclusions",
+          "body": "Certain collections, custom finishes, and newly introduced products may be excluded from promotional events."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.lookbooks",
+    "title": "Lookbooks",
+    "type": "page",
+    "description": "Edit the Lookbooks page content shown on the website.",
+    "path": "/lookbooks",
+    "data": {
+      "eyebrow": "Design",
+      "title": "Lookbooks",
+      "description": "Curated room edits and seasonal styling stories from the Furalto design studio.",
+      "sections": [
+        {
+          "title": "Lookbooks",
+          "body": "Layered neutrals, channel-tufted headboards, and warm brass accents for restorative spaces."
+        },
+        {
+          "title": "Terrace Living",
+          "body": "Outdoor sectionals, stone tables, and ambient lighting for elevated open-air entertaining."
+        }
+      ]
+    }
+  },
+  {
+    "key": "page.design-consultation",
+    "title": "Design Consultation",
+    "type": "page",
+    "description": "Edit the design consultation page.",
+    "path": "/design/consultation",
+    "data": {
+      "eyebrow": "Design Services",
+      "title": "Design Consultation",
+      "description": "Work one-on-one with Furalto designers to plan cohesive rooms from concept to installation.",
+      "sections": [
+        {
+          "title": "Design Consultation",
+          "body": "Space planning, furniture selection, custom upholstery, and installation coordination for residential projects."
+        },
+        {
+          "title": "Room Edits",
+          "body": "Focused consultations for single rooms — living, bedroom, dining, or outdoor — starting at ₹15,000."
+        }
+      ]
+    }
+  }
+]

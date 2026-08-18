@@ -1,0 +1,42 @@
+{
+  "name": "furalto-backend",
+  "version": "1.0.0",
+  "description": "Furalto backend API",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon",
+    "build": "node --check src/server.js && node -e \"require('./src/app'); console.log('Backend build OK')\"",
+    "export-products": "node scripts/export-products.js",
+    "seed": "node scripts/seed.js",
+    "seed:reviews": "node scripts/seed-sofa-bed-reviews.js",
+    "migrate:flat-categories": "node scripts/migrate-to-flat-categories.js",
+    "import:sofas": "node scripts/import-sofas.js",
+    "import:beds": "node scripts/import-sofas.js beds.import.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.10.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.6.0",
+    "express-validator": "^7.3.2",
+    "google-auth-library": "^10.9.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.4",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "nodemailer": "^9.0.3",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

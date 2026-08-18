@@ -1,0 +1,215 @@
+[
+  {
+    "productName": "Aeris Bed",
+    "mrp": 130000,
+    "price": 65000,
+    "dimensions": {
+      "overallLength": "2100 mm",
+      "overallWidth": "1900 mm",
+      "headboardHeight": "1100 mm",
+      "bedHeightTop": "450 mm",
+      "baseHeight": "300 mm",
+      "mattressSize": "King: 1980 x 1830 mm"
+    },
+    "weight": "90–110 kg",
+    "description": {
+      "internalStructure": [
+        "Kiln-dried hardwood frame",
+        "Marine plywood reinforcement",
+        "Heavy-duty internal support"
+      ],
+      "upholstery": [
+        "Premium bouclé fabric",
+        "Velvet finish",
+        "Linen blend",
+        "Leatherette option"
+      ],
+      "cushioning": [
+        "High-density HR foam",
+        "Multi-layer soft padding",
+        "Comfort edge support"
+      ],
+      "storageMechanism": [
+        "Premium hydraulic lift hardware",
+        "Anti-rust metal fittings",
+        "Reinforced hinge system"
+      ]
+    },
+    "designFeatures": [
+      "Fully upholstered soft bed with extended cushioned headboard panels",
+      "Clean, no sharp edges",
+      "Low-profile base",
+      "Neutral palette",
+      "Slightly recessed legs"
+    ],
+    "careInstructions": [
+      "Vacuum fabric regularly with soft brush attachment.",
+      "Clean spills immediately using dry soft cloth.",
+      "Avoid direct sunlight and excessive moisture.",
+      "Do not use harsh chemicals or bleach.",
+      "Operate hydraulic storage smoothly without overloading.",
+      "Professional upholstery cleaning recommended periodically.",
+      "Indoor use only."
+    ],
+    "packagingAndDelivery": [
+      "Secure multi-layer protective packaging",
+      "Foam, corner guards & heavy-duty carton wrapping",
+      "Delivered in modular sections for safe transportation",
+      "Professional installation assistance available",
+      "Dispatch timeline: 10–15 working days (custom finishes may vary)"
+    ],
+    "category": "Bed",
+    "rooms": ["bedroom"],
+    "relatedSlugs": ["verda-softedge-bed", "aura-softline-bed", "linear-edge-bed"],
+    "images": [
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860967/1_gtoebn.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860925/2_vwvn5k.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860924/3_sdiwef.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860925/4_frdxvm.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860926/5_rxb4xp.png"
+    ]
+  },
+  {
+    "productName": "Verda Softedge Bed",
+    "mrp": 130000,
+    "price": 65000,
+    "dimensions": {
+      "overallLength": "2135 mm",
+      "overallWidth": "1930 mm",
+      "headboardHeight": "1015 mm",
+      "bedBaseHeight": "330 mm",
+      "mattressTopHeight": "510 mm",
+      "headboardThickness": "100 mm"
+    },
+    "weight": "90–110 kg",
+    "description": "An ergonomic padded headboard with soft-edge detailing — quiet structure, anti-slip mattress support, and calm modern comfort.",
+    "designFeatures": [
+      "Ergonomic padded headboard",
+      "Soft-edge design",
+      "Noise-free structure",
+      "Anti-slip mattress support"
+    ],
+    "careInstructions": [
+      "Vacuum fabric regularly with soft brush attachment.",
+      "Clean spills immediately using dry soft cloth.",
+      "Avoid direct sunlight and excessive moisture.",
+      "Do not use harsh chemicals or bleach.",
+      "Operate hydraulic storage smoothly without overloading.",
+      "Professional upholstery cleaning recommended periodically.",
+      "Indoor use only."
+    ],
+    "packagingAndDelivery": [
+      "Secure multi-layer protective packaging",
+      "Foam, corner guards & heavy-duty carton wrapping",
+      "Delivered in modular sections for safe transportation",
+      "Professional installation assistance available",
+      "Dispatch timeline: 10–15 working days (custom finishes may vary)"
+    ],
+    "category": "Bed",
+    "rooms": ["bedroom"],
+    "relatedSlugs": ["aeris-bed", "aurum-soft-edge-bed", "terra-block-bed"],
+    "images": [
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860969/1_tx2wjv.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860969/2_fwguhw.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860969/3_apuhsa.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860969/4_egszcc.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860970/5_lj1my1.png"
+    ]
+  },
+  {
+    "productName": "Terra Block Bed",
+    "mrp": 130000,
+    "price": 65000,
+    "dimensions": {
+      "overallWidth": "1940 mm",
+      "overallDepth": "2240 mm",
+      "headboardHeight": "950 mm",
+      "bedHeightTopOfMattress": "500 mm",
+      "platformHeight": "320 mm",
+      "mattressSizeKing": "1830 × 1980 mm",
+      "headboardThickness": "100 mm",
+      "sideClearanceEachSide": "~55 mm"
+    },
+    "weight": "90–115 kg",
+    "category": "Bed",
+    "designFeatures": [
+      "Bold segmented upholstery",
+      "Functional edge seating",
+      "Grounded luxurious feel",
+      "Soft-touch finish",
+      "Premium detailing",
+      "Focal point"
+    ],
+    "rooms": ["bedroom"],
+    "relatedSlugs": ["obsidian-block-bed", "gridlounge-bed", "linear-edge-bed"],
+    "images": [
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860971/1_ccjf67.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860962/2_zka8y2.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860961/3_s1pkyk.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860962/4_aawhzp.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860967/5_tcdeca.png"
+    ]
+  },
+  {
+    "productName": "Linear Edge Bed",
+    "mrp": 130000,
+    "price": 65000,
+    "dimensions": {
+      "overallWidth": "1980 mm",
+      "overallLength": "2150 mm",
+      "headboardHeight": "1000 mm",
+      "mattressTopHeight": "480 mm",
+      "baseHeight": "280 mm",
+      "mattressSizeKing": "1830 × 1980 mm"
+    },
+    "weight": "75–90 kg",
+    "category": "Bed",
+    "designFeatures": [
+      "Clean sharp edges",
+      "Grid lines",
+      "Space efficient",
+      "Comfortable back support"
+    ],
+    "rooms": ["bedroom"],
+    "relatedSlugs": ["aeris-bed", "terra-block-bed", "novara-panel-bed"],
+    "images": [
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860989/1_bqpltl.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860935/2_hpyjis.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860936/3_j9f2ce.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860937/4_piskw2.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860938/5_qfq4ij.png"
+    ]
+  },
+  {
+    "productName": "Obsidian Block Bed",
+    "mrp": 130000,
+    "price": 65000,
+    "dimensions": {
+      "overallWidth": "2100 mm",
+      "overallDepth": "2250 mm",
+      "headboardHeight": "950 mm",
+      "bedHeightTopOfMattress": "480 mm",
+      "platformHeight": "320 mm",
+      "mattressSizeKing": "1830 × 1980 mm",
+      "headboardThickness": "120 mm",
+      "frameEdgeThickness": "200 mm"
+    },
+    "weight": "95–115 kg",
+    "category": "Bed",
+    "designFeatures": [
+      "Sculpted block headboard",
+      "Deep padded sides",
+      "Low-profile platform",
+      "Bold silhouette"
+    ],
+    "rooms": ["bedroom"],
+    "relatedSlugs": ["terra-block-bed", "noir-shell-bed", "velora-layer-bed"],
+    "images": [
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860999/1_nxcrup.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860961/2_sfkxsl.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860961/3_x5ofpe.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860962/4_xcwj9u.jpg",
+      "https://res.cloudinary.com/m1zm0cpq/image/upload/v1785860961/5_fa6sr9.png"
+    ]
+  }
+]
