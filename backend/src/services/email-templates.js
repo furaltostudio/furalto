@@ -311,6 +311,151 @@ const buildOrderItemsText = (items = []) =>
     )
     .join("\n");
 
+const getInvoiceTax = (order, company = {}) => {
+  const { breakdownGstInclusive } = require("../utils/pricing");
+  const gst = breakdownGstInclusive(order.total);
+  const companyState = (company.state || "").trim().toLowerCase();
+  const customerState = (order.contact?.state || "").trim().toLowerCase();
+  const isIntraState =
+    companyState && customerState && companyState === customerState;
+  const invoiceDate = new Date(order.createdAt || Date.now()).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const legalName = escapeHtml(company.legalName || BRAND.name);
+  const gstin = String(company.gstin || "").trim().toUpperCase();
+  const isProd = (process.env.NODE_ENV || "development") === "production";
+  if (!gstin && isProd) {
+    throw new Error("COMPANY_GSTIN is required to generate a tax invoice.");
+  }
+
+  const taxRows = isIntraState
+    ? `
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">CGST (9%)</td>
+          <td style="padding:6px 0;text-align:right;">${formatInr(gst.cgst)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">SGST (9%)</td>
+          <td style="padding:6px 0;text-align:right;">${formatInr(gst.sgst)}</td>
+        </tr>
+      `
+    : `
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">IGST (18%)</td>
+          <td style="padding:6px 0;text-align:right;">${formatInr(gst.igst)}</td>
+        </tr>
+      `;
+
+  return { gst, invoiceDate, legalName, gstin, taxRows };
+};
+
+const buildPaidOrderEmail = (order, company = {}) => {
+  const firstName = escapeHtml(order.contact?.firstName || "there");
+  const paymentId = order.razorpayPaymentId || "—";
+  const trackUrl = `${BRAND.frontendUrl}/track-order?orderNumber=${encodeURIComponent(
+    order.orderNumber
+  )}&email=${encodeURIComponent(order.contact?.email || "")}`;
+  const { gst, invoiceDate, legalName, gstin, taxRows } = getInvoiceTax(order, company);
+  const companyAddress = escapeHtml(company.address || "");
+  const sellerLine = gstin
+    ? `${legalName} · GSTIN ${escapeHtml(gstin)}`
+    : legalName;
+
+  const html = buildEmailLayout({
+    preheader: `Order ${order.orderNumber} confirmed. ${formatInr(order.total)} paid.`,
+    eyebrow: "Order Confirmed",
+    title: "Thank you for your order",
+    bodyHtml: `
+      <p style="margin:0 0 14px;">Hi ${firstName},</p>
+      <p style="margin:0 0 14px;">
+        We’ve received your payment and confirmed order
+        <strong>${escapeHtml(order.orderNumber)}</strong>.
+        This email is your confirmation, payment receipt, and tax invoice.
+      </p>
+      ${buildOrderItemsHtml(order.items)}
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:16px 0 0;font-size:14px;">
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Payment ID</td>
+          <td style="padding:6px 0;text-align:right;">${escapeHtml(paymentId)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Payment method</td>
+          <td style="padding:6px 0;text-align:right;">${escapeHtml(
+            formatStatusLabel(order.paymentMethod || "razorpay")
+          )}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Invoice date</td>
+          <td style="padding:6px 0;text-align:right;">${escapeHtml(invoiceDate)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Taxable value</td>
+          <td style="padding:6px 0;text-align:right;">${formatInr(gst.taxableValue)}</td>
+        </tr>
+        ${taxRows}
+        ${
+          order.discount
+            ? `<tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Promo discount</td>
+          <td style="padding:6px 0;text-align:right;">−${formatInr(order.discount)}</td>
+        </tr>`
+            : ""
+        }
+        <tr>
+          <td style="padding:6px 0;color:${BRAND.muted};">Shipping</td>
+          <td style="padding:6px 0;text-align:right;">${
+            order.shipping === 0 ? "Complimentary" : formatInr(order.shipping)
+          }</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 0 0;border-top:1px solid ${BRAND.border};font-size:16px;">Total paid (incl. GST)</td>
+          <td style="padding:10px 0 0;border-top:1px solid ${BRAND.border};text-align:right;font-size:16px;font-weight:500;">
+            ${formatInr(order.total)}
+          </td>
+        </tr>
+      </table>
+      <p style="margin:16px 0 0;font-size:14px;color:${BRAND.muted};">
+        Delivering to ${escapeHtml(order.contact?.address || "")},
+        ${escapeHtml(order.contact?.city || "")}
+        ${order.contact?.state ? `, ${escapeHtml(order.contact.state)}` : ""}
+        ${escapeHtml(order.contact?.postalCode || "")}.
+      </p>
+      <p style="margin:16px 0 0;font-size:12px;color:${BRAND.muted};">
+        ${sellerLine}${companyAddress ? `<br/>${companyAddress}` : ""}<br/>
+        Prices are GST-inclusive at 18%. Please retain this email for your records.
+      </p>
+    `,
+    ctaLabel: "Track Your Order",
+    ctaUrl: trackUrl,
+    footerNote: "This is your only order email — confirmation, receipt, and invoice together.",
+  });
+
+  const text = `Hi ${order.contact?.firstName || "there"},
+
+Your Furalto order ${order.orderNumber} is confirmed.
+Payment ID: ${paymentId}
+Total paid (incl. GST): ${formatInr(order.total)}
+
+Items:
+${buildOrderItemsText(order.items)}
+
+Delivering to ${order.contact?.address || ""}, ${order.contact?.city || ""} ${order.contact?.postalCode || ""}.
+
+Track your order:
+${trackUrl}
+
+Furalto
+${BRAND.supportEmail} | ${BRAND.supportPhone}`;
+
+  return {
+    subject: `Order confirmed · ${order.orderNumber}`,
+    html,
+    text,
+  };
+};
+
 const buildOrderConfirmationEmail = (order) => {
   const firstName = escapeHtml(order.contact?.firstName || "there");
   const trackUrl = `${BRAND.frontendUrl}/track-order?orderNumber=${encodeURIComponent(
@@ -488,80 +633,105 @@ ${adminUrl}`;
   };
 };
 
+const ORDER_STATUS_EMAIL = {
+  confirmed: {
+    eyebrow: "Order Placed",
+    title: "Your order is confirmed",
+    body: "We’ve received your order and our studio will begin preparing your pieces.",
+    subject: (orderNumber) => `Order placed · ${orderNumber}`,
+    preheader: (orderNumber) => `Order ${orderNumber} has been placed and confirmed.`,
+  },
+  processing: {
+    eyebrow: "In the Studio",
+    title: "Your order is being prepared",
+    body: "Your pieces are now being prepared in our studio. We’ll email you again when they ship.",
+    subject: (orderNumber) => `Being prepared · ${orderNumber}`,
+    preheader: (orderNumber) => `Order ${orderNumber} is being prepared in our studio.`,
+  },
+  shipped: {
+    eyebrow: "On the Way",
+    title: "Your order has shipped",
+    body: "Your order is on its way. You can follow progress anytime with the tracking link below.",
+    subject: (orderNumber) => `Shipped · ${orderNumber}`,
+    preheader: (orderNumber) => `Order ${orderNumber} has shipped.`,
+  },
+  delivered: {
+    eyebrow: "Delivered",
+    title: "Your order has been delivered",
+    body: "Your order has been delivered. We hope every detail feels right in your home.",
+    subject: (orderNumber) => `Delivered · ${orderNumber}`,
+    preheader: (orderNumber) => `Order ${orderNumber} has been delivered.`,
+  },
+  cancelled: {
+    eyebrow: "Order Cancelled",
+    title: "Your order was cancelled",
+    body: "This order has been cancelled. If this is unexpected, please call or email us and we’ll help right away.",
+    subject: (orderNumber) => `Cancelled · ${orderNumber}`,
+    preheader: (orderNumber) => `Order ${orderNumber} was cancelled.`,
+  },
+};
+
 const buildOrderStatusEmail = (order, previousStatus, options = {}) => {
   const firstName = escapeHtml(order.contact?.firstName || "there");
-  const statusLabel = formatStatusLabel(order.status);
+  const status = order.status;
+  const copy = ORDER_STATUS_EMAIL[status] || {
+    eyebrow: "Order Update",
+    title: `Order ${formatStatusLabel(status).toLowerCase()}`,
+    body: "You can view the latest status of your order anytime.",
+    subject: (orderNumber) => `Order ${orderNumber} · ${formatStatusLabel(status)}`,
+    preheader: (orderNumber) => `Order ${orderNumber} is now ${formatStatusLabel(status)}.`,
+  };
   const trackUrl = `${BRAND.frontendUrl}/track-order?orderNumber=${encodeURIComponent(
     order.orderNumber
   )}&email=${encodeURIComponent(order.contact?.email || "")}`;
   const reviewUrl = options.reviewInviteToken
     ? `${BRAND.frontendUrl}/feedback?token=${encodeURIComponent(options.reviewInviteToken)}`
     : null;
-
-  const copyByStatus = {
-    processing: "Your order is now being prepared in our studio.",
-    shipped: "Your order is on its way. You can track progress anytime.",
-    delivered: "Your order has been marked as delivered. We hope you love every detail.",
-    cancelled: "Your order has been cancelled. If this is unexpected, please contact us.",
-    confirmed: "Your order is confirmed and queued for preparation.",
-    pending: "Your order is pending confirmation.",
-  };
-
-  const feedbackHtml =
-    order.status === "delivered" && reviewUrl
-      ? `
-      <p style="margin:18px 0 0;">
-        We’d love your honest feedback — it helps other customers choose with confidence.
-      </p>
-    `
-      : "";
+  const isDelivered = status === "delivered" && reviewUrl;
 
   const html = buildEmailLayout({
-    preheader:
-      order.status === "delivered" && reviewUrl
-        ? `Order ${order.orderNumber} delivered — share your feedback.`
-        : `Order ${order.orderNumber} is now ${statusLabel}.`,
-    eyebrow: "Order Update",
-    title: order.status === "delivered" ? "Your order was delivered" : `Order ${statusLabel.toLowerCase()}`,
+    preheader: copy.preheader(order.orderNumber),
+    eyebrow: copy.eyebrow,
+    title: copy.title,
     bodyHtml: `
       <p style="margin:0 0 14px;">Hi ${firstName},</p>
       <p style="margin:0 0 14px;">
-        An update on order <strong>${escapeHtml(order.orderNumber)}</strong>:
-        status changed${previousStatus ? ` from ${escapeHtml(formatStatusLabel(previousStatus))}` : ""}
-        to <strong>${escapeHtml(statusLabel)}</strong>.
+        ${escapeHtml(copy.body)}
       </p>
-      <p style="margin:0;">
-        ${escapeHtml(copyByStatus[order.status] || "You can view the latest status anytime.")}
+      <p style="margin:0;font-size:14px;color:${BRAND.muted};">
+        Order <strong style="color:${BRAND.text};">${escapeHtml(order.orderNumber)}</strong>
+        ${
+          previousStatus && previousStatus !== status
+            ? ` · updated from ${escapeHtml(formatStatusLabel(previousStatus).toLowerCase())}`
+            : ""
+        }.
       </p>
-      ${feedbackHtml}
+      ${
+        isDelivered
+          ? `<p style="margin:18px 0 0;">If you have a moment, we’d value your honest feedback.</p>`
+          : ""
+      }
     `,
-    ctaLabel: order.status === "delivered" && reviewUrl ? "Share Your Feedback" : "View Order Status",
-    ctaUrl: order.status === "delivered" && reviewUrl ? reviewUrl : trackUrl,
-    footerNote:
-      order.status === "delivered" && reviewUrl
-        ? `You can also track this order anytime: ${trackUrl}`
-        : "You receive these updates whenever your order status changes.",
+    ctaLabel: isDelivered ? "Share Your Feedback" : "Track Your Order",
+    ctaUrl: isDelivered ? reviewUrl : trackUrl,
+    footerNote: isDelivered
+      ? `You can also track this order anytime: ${trackUrl}`
+      : "We’ll email you at each step — prepared, shipped, and delivered.",
   });
 
   const text = `Hi ${order.contact?.firstName || "there"},
 
-Order ${order.orderNumber} is now ${statusLabel}.
-${copyByStatus[order.status] || ""}
-${
-  order.status === "delivered" && reviewUrl
-    ? `\nShare your feedback: ${reviewUrl}\n`
-    : ""
-}
+${copy.body}
+
+Order ${order.orderNumber}
+${isDelivered ? `\nShare your feedback: ${reviewUrl}\n` : ""}
 Track: ${trackUrl}
 
 Furalto
 ${BRAND.supportEmail} | ${BRAND.supportPhone}`;
 
   return {
-    subject:
-      order.status === "delivered"
-        ? `Order ${order.orderNumber} · Delivered — share your feedback`
-        : `Order ${order.orderNumber} · ${statusLabel}`,
+    subject: copy.subject(order.orderNumber),
     html,
     text,
   };
@@ -936,6 +1106,7 @@ module.exports = {
   buildVerificationEmail,
   buildPasswordResetEmail,
   buildStaffInviteEmail,
+  buildPaidOrderEmail,
   buildOrderConfirmationEmail,
   buildPaymentReceiptEmail,
   buildAdminNewOrderEmail,

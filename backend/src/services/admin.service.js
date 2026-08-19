@@ -303,38 +303,41 @@ const updateOrder = async (orderNumber, { status, paymentStatus, internalNotes, 
     const emailStatus = refundedNow && !statusChanged ? "cancelled" : order.status;
     const emailOrder = order.toObject();
     emailOrder.status = emailStatus;
+    const { sendOrderStatusEmail, sendPaidOrderEmails } = require("./email.service");
 
     if (
-      emailOrder.lastStatusEmailed !== emailStatus ||
-      !emailOrder.lastStatusEmailAt
+      previousPaymentStatus !== "paid" &&
+      order.paymentStatus === "paid" &&
+      !order.confirmationEmailSentAt
     ) {
-      const { sendOrderStatusEmail, sendPaidOrderEmails } = require("./email.service");
-
-      if (
-        previousPaymentStatus !== "paid" &&
-        order.paymentStatus === "paid" &&
-        !order.confirmationEmailSentAt
-      ) {
-        sendPaidOrderEmails(order)
-          .then(async () => {
-            order.confirmationEmailSentAt = new Date();
-            await order.save();
-          })
-          .catch(() => undefined);
+      try {
+        await sendPaidOrderEmails(order);
+        order.confirmationEmailSentAt = new Date();
+        await order.save();
+      } catch (error) {
+        console.warn("[email:paid-order]", error.message || error);
       }
+    }
 
-      sendOrderStatusEmail(emailOrder, previousStatus, {
-        reviewInviteToken: deliveredNow ? reviewInviteToken : null,
-      })
-        .then(async () => {
-          order.lastStatusEmailAt = new Date();
-          order.lastStatusEmailed = emailStatus;
-          if (deliveredNow && reviewInviteToken) {
-            order.reviewInviteSentAt = new Date();
-          }
-          await order.save();
-        })
-        .catch(() => undefined);
+    const alreadyToldCustomer =
+      emailStatus === "confirmed" && Boolean(order.confirmationEmailSentAt);
+    const alreadyEmailedThisStatus = order.lastStatusEmailed === emailStatus;
+    const skipPending = emailStatus === "pending";
+
+    if (!alreadyToldCustomer && !alreadyEmailedThisStatus && !skipPending) {
+      try {
+        await sendOrderStatusEmail(emailOrder, previousStatus, {
+          reviewInviteToken: deliveredNow ? reviewInviteToken : null,
+        });
+        order.lastStatusEmailAt = new Date();
+        order.lastStatusEmailed = emailStatus;
+        if (deliveredNow && reviewInviteToken) {
+          order.reviewInviteSentAt = new Date();
+        }
+        await order.save();
+      } catch (error) {
+        console.warn("[email:order-status]", error.message || error);
+      }
     }
   }
 

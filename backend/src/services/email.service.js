@@ -4,16 +4,13 @@ const {
   buildVerificationEmail,
   buildPasswordResetEmail,
   buildStaffInviteEmail,
-  buildOrderConfirmationEmail,
-  buildPaymentReceiptEmail,
-  buildAdminNewOrderEmail,
+  buildPaidOrderEmail,
   buildOrderStatusEmail,
   buildPaymentFailedEmail,
   buildContactNotifyEmail,
   buildAppointmentEmails,
   buildCustomQuoteNotifyEmail,
   buildCustomQuoteCustomerEmail,
-  buildTaxInvoiceEmail,
   buildNewsletterWelcomeEmail,
 } = require("./email-templates");
 
@@ -294,48 +291,16 @@ const sendPaidOrderEmails = async (order) => {
   const customerEmail = order.contact?.email;
   if (!customerEmail) return;
 
-  const confirmation = buildOrderConfirmationEmail(order);
-  const receipt = buildPaymentReceiptEmail(order);
-  const adminAlert = buildAdminNewOrderEmail(order);
+  const paidOrder = buildPaidOrderEmail(order, env.company);
   const billingEmails = getBillingEmails();
 
-  await safeSend("order-confirmation", () =>
+  await safeSend("paid-order", () =>
     sendEmail({
       to: customerEmail,
       bcc: billingEmails,
-      subject: confirmation.subject,
-      text: confirmation.text,
-      html: confirmation.html,
-    })
-  );
-
-  await safeSend("payment-receipt", () =>
-    sendEmail({
-      to: customerEmail,
-      bcc: billingEmails,
-      subject: receipt.subject,
-      text: receipt.text,
-      html: receipt.html,
-    })
-  );
-
-  await safeSend("admin-new-order", () =>
-    sendEmail({
-      to: billingEmails,
-      subject: adminAlert.subject,
-      text: adminAlert.text,
-      html: adminAlert.html,
-    })
-  );
-
-  const invoice = buildTaxInvoiceEmail(order, env.company);
-  await safeSend("tax-invoice", () =>
-    sendEmail({
-      to: customerEmail,
-      bcc: billingEmails,
-      subject: invoice.subject,
-      text: invoice.text,
-      html: invoice.html,
+      subject: paidOrder.subject,
+      text: paidOrder.text,
+      html: paidOrder.html,
     })
   );
 };
@@ -344,15 +309,13 @@ const sendOrderStatusEmail = async (order, previousStatus, options = {}) => {
   if (!order.contact?.email) return;
 
   const content = buildOrderStatusEmail(order, previousStatus, options);
-  await safeSend("order-status", () =>
-    sendEmail({
-      to: order.contact.email,
-      bcc: getBillingEmails(),
-      subject: content.subject,
-      text: content.text,
-      html: content.html,
-    })
-  );
+  await sendEmail({
+    to: order.contact.email,
+    subject: content.subject,
+    text: content.text,
+    html: content.html,
+    requireDelivery: true,
+  });
 };
 
 const sendPaymentFailedEmail = async (order) => {
