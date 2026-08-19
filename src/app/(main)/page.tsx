@@ -4,10 +4,12 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { HomeBrandStrip } from "@/components/home/HomeBrandStrip";
 import { HomeCraftTeaser } from "@/components/home/HomeCraftTeaser";
 import { HomeCustomStudio } from "@/components/home/HomeCustomStudio";
+import { HomeJournal } from "@/components/home/HomeJournal";
 import { HomeTestimonials } from "@/components/home/HomeTestimonials";
 import { ProductInspirations } from "@/components/home/ProductInspirations";
 import { categoryShowcaseItems } from "@/config/category-showcase";
 import { getHomepageContent } from "@/lib/content/siteContent";
+import { loadJournalPosts } from "@/lib/content/journal";
 import { createMetadata } from "@/lib/seo/metadata";
 
 /** Fresh CMS on each request so Shop the Look / content edits show immediately */
@@ -22,7 +24,10 @@ export const metadata = createMetadata({
 });
 
 export default async function HomePage() {
-  const content = await getHomepageContent();
+  const [content, journalPosts] = await Promise.all([
+    getHomepageContent(),
+    loadJournalPosts(),
+  ]);
 
   // Furniture-type nav is source of truth. CMS may only override matching ids
   // (avoids old room labels like Outdoor/Living overwriting Sofas by index).
@@ -57,6 +62,7 @@ export default async function HomePage() {
         />
         <HomeCustomStudio content={content.customStudio} />
         <HomeCraftTeaser content={content.craftStory} />
+        <HomeJournal posts={journalPosts} />
         <HomeTestimonials
           eyebrow={content.testimonials.eyebrow}
           title={content.testimonials.title}

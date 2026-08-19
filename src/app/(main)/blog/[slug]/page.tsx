@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { BlogArticleContent } from "@/components/blog/BlogContent";
-import { blogService } from "@/services/blog.service";
+import { loadJournalPost, loadJournalPosts, staticJournalPosts } from "@/lib/content/journal";
 import { createMetadata } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
@@ -11,39 +11,39 @@ type BlogArticlePageProps = {
 
 export async function generateMetadata({ params }: BlogArticlePageProps) {
   const { slug } = await params;
-  try {
-    const post = await blogService.getBySlug(slug);
+  const post = await loadJournalPost(slug);
+  if (!post) {
     return createMetadata({
-      title: post.title,
-      description: post.seoDescription || post.excerpt,
-      path: `/blog/${post.slug}`,
-      ogImage: post.coverImage?.src || "/home/furnitures_one.jpeg",
-    });
-  } catch {
-    return createMetadata({
-      title: "Journal",
-      description: "Furalto journal article",
+      title: "Blog",
+      description: "Furalto blog article",
       path: `/blog/${slug}`,
     });
   }
+
+  return createMetadata({
+    title: post.title,
+    description: post.seoDescription || post.excerpt,
+    path: `/blog/${post.slug}`,
+    ogImage: post.coverImage?.src || "/home/furnitures_one.jpeg",
+  });
+}
+
+export function generateStaticParams() {
+  return staticJournalPosts.map((post) => ({ slug: post.slug }));
 }
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   const { slug } = await params;
+  const [post, list] = await Promise.all([loadJournalPost(slug), loadJournalPosts()]);
 
-  const result = await Promise.all([
-    blogService.getBySlug(slug),
-    blogService.list({ limit: "6" }),
-  ])
-    .then(([post, list]) => ({
-      post,
-      related: list.posts.filter((item) => item.slug !== post.slug).slice(0, 3),
-    }))
-    .catch(() => null);
-
-  if (!result) {
+  if (!post) {
     notFound();
   }
 
-  return <BlogArticleContent post={result.post} related={result.related} />;
+  return (
+    <BlogArticleContent
+      post={post}
+      related={list.filter((item) => item.slug !== post.slug).slice(0, 3)}
+    />
+  );
 }

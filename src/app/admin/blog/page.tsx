@@ -89,7 +89,7 @@ export default function AdminBlogPage() {
 
         {!isLoading && posts.length === 0 ? (
           <AdminEmptyState
-            title="No journal posts yet"
+            title="No blog posts yet"
             description="Write your first article for the Furalto blog."
           />
         ) : (

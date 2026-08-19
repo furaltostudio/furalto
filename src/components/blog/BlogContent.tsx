@@ -45,7 +45,7 @@ export function BlogIndexContent({ posts }: { posts: BlogPost[] }) {
 
           <div className={`container-app ${styles.featuredFrame}`}>
             <Reveal className={styles.featuredCopy}>
-              <p className={styles.eyebrowOnDark}>Journal · Featured</p>
+              <p className={styles.eyebrowOnDark}>Blog · Featured</p>
               <p className={styles.featuredMeta}>
                 <span>{featured.category}</span>
                 <span aria-hidden="true">·</span>
@@ -65,9 +65,9 @@ export function BlogIndexContent({ posts }: { posts: BlogPost[] }) {
       ) : (
         <header className={styles.emptyHero}>
           <div className="container-app">
-            <p className={styles.eyebrow}>Journal</p>
+            <p className={styles.eyebrow}>Blog</p>
             <h1>Stories from the atelier</h1>
-            <p className={styles.empty}>New journal entries are on the way.</p>
+            <p className={styles.empty}>New blog posts are on the way.</p>
           </div>
         </header>
       )}
@@ -77,7 +77,7 @@ export function BlogIndexContent({ posts }: { posts: BlogPost[] }) {
           <div className="container-app">
             <Reveal className={styles.indexHead}>
               <p className={styles.eyebrow}>More stories</p>
-              <h2>From the journal</h2>
+              <h2>From the blog</h2>
               <span className={styles.rule} aria-hidden="true" />
             </Reveal>
 
@@ -207,7 +207,7 @@ export function BlogArticleContent({
           <Reveal className={styles.storyCopy}>
             <Link href="/blog" className={styles.backLink}>
               <ArrowLeft strokeWidth={1.25} aria-hidden="true" />
-              Journal
+              Blog
             </Link>
             <p className={styles.eyebrowOnDark}>{post.category}</p>
             <h1 className={styles.storyTitle}>{post.title}</h1>
@@ -229,12 +229,12 @@ export function BlogArticleContent({
             ◆
           </span>
           <p className={styles.endNote}>
-            Written for the Furalto journal — notes on craft, rooms, and the quiet work of making
+            Written for the Furalto blog — notes on craft, rooms, and the quiet work of making
             furniture that lasts.
           </p>
           <div className={styles.endLinks}>
             <Link href="/blog" className={styles.endLink}>
-              All essays
+              All posts
             </Link>
             <Link href="/about" className={styles.endLink}>
               Our story
@@ -251,7 +251,7 @@ export function BlogArticleContent({
           <div className="container-app">
             <Reveal className={styles.relatedHead}>
               <p className={styles.eyebrow}>Continue reading</p>
-              <h2>Next from the journal</h2>
+              <h2>Next from the blog</h2>
               <span className={styles.rule} aria-hidden="true" />
             </Reveal>
 

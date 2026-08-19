@@ -8,6 +8,7 @@ import {
   getAllStaticPageSlugs,
 } from "@/config/static-pages";
 import { siteConfig } from "@/config/site";
+import { staticJournalPosts } from "@/lib/content/journal";
 import { fetchProductSlugs } from "@/lib/products/catalog";
 
 type SitemapEntry = MetadataRoute.Sitemap[number];
@@ -48,6 +49,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/care", { priority: 0.65 }),
     entry("/swatches", { priority: 0.65 }),
     entry("/search", { changeFrequency: "daily", priority: 0.5 }),
+    entry("/blog", { changeFrequency: "weekly", priority: 0.8 }),
+    ...staticJournalPosts.map((post) =>
+      entry(`/blog/${post.slug}`, { changeFrequency: "monthly", priority: 0.7 })
+    ),
     ...collectionRoutes.map((route) => entry(route, { priority: 0.9 })),
     ...inspirationRoutes.map((route) => entry(route, { priority: 0.7 })),
     ...staticRoutes.map((route) =>

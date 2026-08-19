@@ -12,7 +12,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin", label: "Dashboard", roles: STAFF_ROLES, section: "Overview" },
   { href: "/admin/content", label: "Website", roles: STAFF_ROLES, section: "Website" },
   { href: "/admin/inspirations", label: "Shop the Look", roles: STAFF_ROLES, section: "Website" },
-  { href: "/admin/blog", label: "Journal", roles: STAFF_ROLES, section: "Website" },
+  { href: "/admin/blog", label: "Blog", roles: STAFF_ROLES, section: "Website" },
   { href: "/admin/products", label: "Products", roles: STAFF_ROLES, section: "Commerce" },
   { href: "/admin/categories", label: "Categories", roles: STAFF_ROLES, section: "Commerce" },
   { href: "/admin/orders", label: "Orders", roles: STAFF_ROLES, section: "Commerce" },
@@ -39,8 +39,8 @@ export const ADMIN_PAGE_META: Record<string, { title: string; description: strin
       "Pin live sofa and bed products on lifestyle images for the homepage inspirations carousel.",
   },
   "/admin/blog": {
-    title: "Journal",
-    description: "Write and publish blog posts for the Furalto journal.",
+    title: "Blog",
+    description: "Write and publish posts for the Furalto blog.",
   },
   "/admin/products": {
     title: "Products",
@@ -83,8 +83,8 @@ export const ADMIN_PAGE_META: Record<string, { title: string; description: strin
 export function getAdminPageMeta(pathname: string) {
   if (pathname.startsWith("/admin/blog/")) {
     return pathname.endsWith("/new")
-      ? { title: "Write Journal Post", description: "Create a new article for the website blog." }
-      : { title: "Edit Journal Post", description: "Update article content, cover, and publish status." };
+      ? { title: "Write Blog Post", description: "Create a new article for the website blog." }
+      : { title: "Edit Blog Post", description: "Update article content, cover, and publish status." };
   }
 
   if (pathname.startsWith("/admin/content/")) {

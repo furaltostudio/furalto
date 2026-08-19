@@ -1,25 +1,24 @@
 import { BlogIndexContent } from "@/components/blog/BlogContent";
-import { blogService, type BlogPost } from "@/services/blog.service";
+import { loadJournalPosts } from "@/lib/content/journal";
 import { createMetadata } from "@/lib/seo/metadata";
 
 export const dynamic = "force-dynamic";
 
 export const metadata = createMetadata({
-  title: "Journal",
+  title: "Blog",
   description:
-    "Furalto journal — craft notes, buying guides, and living well for modern Indian homes. Heritage skill, contemporary comfort.",
+    "Furalto blog — craft notes, buying guides, and living well for modern Indian homes. Heritage skill, contemporary comfort.",
   path: "/blog",
-  keywords: ["Furalto blog", "furniture design journal", "Indian home design tips"],
+  keywords: [
+    "Furalto blog",
+    "luxury furniture India blog",
+    "sofa buying guide India",
+    "furniture design Delhi",
+    "Indian home design tips",
+  ],
 });
 
 export default async function BlogPage() {
-  let posts: BlogPost[] = [];
-  try {
-    const result = await blogService.list({ limit: "24" });
-    posts = result.posts;
-  } catch {
-    posts = [];
-  }
-
+  const posts = await loadJournalPosts();
   return <BlogIndexContent posts={posts} />;
 }

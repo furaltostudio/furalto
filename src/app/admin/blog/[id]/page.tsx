@@ -32,7 +32,7 @@ const emptyForm: FormState = {
   slug: "",
   excerpt: "",
   body: "",
-  category: "Journal",
+  category: "Blog",
   author: "Furalto Studio",
   tags: "",
   publishedAt: new Date().toISOString().slice(0, 10),
@@ -57,7 +57,7 @@ export default function AdminBlogEditorPage() {
   const [message, setMessage] = useState("");
 
   const pageTitle = useMemo(
-    () => (isNew ? "Write new post" : "Edit journal post"),
+    () => (isNew ? "Write new post" : "Edit blog post"),
     [isNew]
   );
 
@@ -74,7 +74,7 @@ export default function AdminBlogEditorPage() {
           slug: post.slug,
           excerpt: post.excerpt,
           body: post.body,
-          category: post.category || "Journal",
+          category: post.category || "Blog",
           author: post.author || "Furalto Studio",
           tags: (post.tags || []).join(", "),
           publishedAt: toDatetimeLocalDate(post.publishedAt),
@@ -107,7 +107,7 @@ export default function AdminBlogEditorPage() {
       slug: form.slug.trim() || undefined,
       excerpt: form.excerpt.trim(),
       body: form.body.trim(),
-      category: form.category.trim() || "Journal",
+      category: form.category.trim() || "Blog",
       author: form.author.trim() || "Furalto Studio",
       tags: form.tags
         .split(",")
@@ -148,7 +148,7 @@ export default function AdminBlogEditorPage() {
             <p className="admin-muted">Markdown-lite body: use blank lines between paragraphs and ## for subheads.</p>
           </div>
           <Link href="/admin/blog" className="admin-link-button">
-            Back to journal
+            Back to blog
           </Link>
         </div>
 
