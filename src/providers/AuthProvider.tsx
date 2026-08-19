@@ -160,7 +160,7 @@ export function getAuthErrorMessage(error: unknown) {
       error.message.includes("NetworkError") ||
       error.message.includes("Load failed")
     ) {
-      return "Cannot reach the API server. Make sure the backend is running on port 5000, then refresh.";
+      return "Cannot reach the API server. Check your connection, then refresh.";
     }
     return error.message;
   }

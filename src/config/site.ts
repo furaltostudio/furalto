@@ -1,13 +1,44 @@
 import { businessContact } from "./contact";
 
+const PRODUCTION_APP_URL = "https://furalto.vercel.app";
+const PRODUCTION_API_URL = "https://furalto-backend.onrender.com";
+
+const isLocalHost = (value: string) => /localhost|127\.0\.0\.1/i.test(value);
+const isDeployed = process.env.NODE_ENV === "production" || Boolean(process.env.VERCEL);
+const normalizeUrl = (value: string) => value.trim().replace(/\/+$/, "");
+
+const resolveAppUrl = () => {
+  const configured = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || "";
+  const withProtocol = configured
+    ? configured.startsWith("http")
+      ? configured
+      : `https://${configured}`
+    : "";
+  const raw = normalizeUrl(withProtocol || "http://localhost:3000");
+
+  if (isDeployed && (isLocalHost(raw) || /www\.furalto\.vercel\.app/i.test(raw))) {
+    return PRODUCTION_APP_URL;
+  }
+
+  return raw;
+};
+
+const resolveApiUrl = () => {
+  const raw = normalizeUrl(process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000");
+  if (isDeployed && (isLocalHost(raw) || !raw.includes("furalto-backend.onrender.com"))) {
+    return PRODUCTION_API_URL;
+  }
+  return raw;
+};
+
 export const siteConfig = {
   name: "Furalto",
   tagline: "Elevate Every Detail",
   subtagline: "Luxury Furniture",
   description:
     "Furalto transforms true Indian craftsmanship into designer furniture for modern homes — a tribute begun in a master’s workshop in 1979. Sofas, beds, dining, and lighting, with white-glove delivery across India and a design studio in Rohini, New Delhi.",
-  url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000",
+  url: resolveAppUrl(),
+  apiUrl: resolveApiUrl(),
   locale: "en_IN",
   keywords: [
     "luxury furniture India",
