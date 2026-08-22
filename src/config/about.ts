@@ -7,6 +7,7 @@ export type AboutPillar = {
   body: string;
 };
 
+
 export type AboutTeamMember = {
   id: string;
   name: string;
