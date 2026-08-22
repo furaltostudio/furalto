@@ -6,6 +6,8 @@ type KnockoutOptions = {
   /** Unused — kept for call-site compatibility. */
   tolerance?: number;
   feather?: number;
+  /** Cap pixel work; keep high enough for crisp scale silhouettes. */
+  maxEdge?: number;
 };
 
 export type KnockoutResult = {
@@ -15,8 +17,14 @@ export type KnockoutResult = {
   ready: boolean;
 };
 
+/** Display-scale cutouts look soft below ~1.2k; keep quality over raw speed. */
+const DEFAULT_MAX_EDGE = 1400;
+
 /** Load via fetch→blob so canvas is not CORS-tainted. */
-async function loadImagePixels(src: string): Promise<{
+async function loadImagePixels(
+  src: string,
+  maxEdge: number,
+): Promise<{
   data: Uint8ClampedArray;
   width: number;
   height: number;
@@ -42,14 +50,23 @@ async function loadImagePixels(src: string): Promise<{
         img.src = objectUrl!;
       });
 
-      const width = image.naturalWidth || image.width;
-      const height = image.naturalHeight || image.height;
+      let width = image.naturalWidth || image.width;
+      let height = image.naturalHeight || image.height;
+      const longest = Math.max(width, height);
+      if (longest > maxEdge) {
+        const scale = maxEdge / longest;
+        width = Math.max(1, Math.round(width * scale));
+        height = Math.max(1, Math.round(height * scale));
+      }
+
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext("2d", { willReadFrequently: true });
       if (!ctx) throw new Error("no 2d context");
-      ctx.drawImage(image, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(image, 0, 0, width, height);
       const frame = ctx.getImageData(0, 0, width, height);
       return { data: frame.data, width, height };
     } catch (err) {
@@ -72,8 +89,8 @@ function isStudioPlate(r: number, g: number, b: number, a: number) {
   const min = Math.min(r, g, b);
   const chroma = max - min;
   const lum = luminance(r, g, b);
-  // White / light-grey studio plates only — keep cream fabric.
-  return chroma < 18 && lum >= 242;
+  // Neutral light greys / whites only — leave warm cream fabric alone.
+  return chroma < 18 && lum >= 210;
 }
 
 /** Flood-fill near-white studio plate from edges so the product can be trimmed tight. */
@@ -115,14 +132,15 @@ function knockOutStudioPlate(data: Uint8ClampedArray, width: number, height: num
 }
 
 /**
- * Prepare scale-guide product art: knock out studio plate if needed, scrub fringe,
- * then crop to the opaque silhouette so object-fit fills the true W×H box.
+ * Prepare scale-guide product art: remove studio plate, keep soft AA edges,
+ * crop to silhouette. Avoid hard binary masks (those look jagged when scaled).
  */
 async function prepareScaleCutout(
-  src: string
+  src: string,
+  maxEdge: number,
 ): Promise<Omit<KnockoutResult, "ready">> {
   try {
-    const { data: srcData, width, height } = await loadImagePixels(src);
+    const { data: srcData, width, height } = await loadImagePixels(src, maxEdge);
     const data = new Uint8ClampedArray(srcData);
     const total = width * height;
 
@@ -131,8 +149,8 @@ async function prepareScaleCutout(
       if (data[idx * 4 + 3] < 16) transparent += 1;
     }
 
-    // No useful alpha yet — flood-fill the studio plate from the edges.
-    if (transparent < total * 0.08) {
+    // Only flood-fill when the plate is still mostly opaque (AI cutout failed / partial).
+    if (transparent < total * 0.12) {
       knockOutStudioPlate(data, width, height);
     }
 
@@ -141,20 +159,26 @@ async function prepareScaleCutout(
     let maxX = 0;
     let maxY = 0;
     let opaque = 0;
-    transparent = 0;
 
     for (let idx = 0; idx < total; idx += 1) {
       const i = idx * 4;
-      const a = data[i + 3];
+      let a = data[i + 3];
       const max = Math.max(data[i], data[i + 1], data[i + 2]);
       const min = Math.min(data[i], data[i + 1], data[i + 2]);
       const chroma = max - min;
       const lum = luminance(data[i], data[i + 1], data[i + 2]);
 
-      // Kill soft AI fringe + milky near-white edge glow.
-      if (a > 0 && a < 200) {
+      // Soft fringe only — keep mid alphas for anti-aliased edges.
+      if (a > 0 && a < 28) {
+        a = 0;
         data[i + 3] = 0;
-      } else if (a >= 200 && lum > 235 && chroma < 16) {
+      } else if (
+        a >= 28 &&
+        a < 220 &&
+        lum > 225 &&
+        chroma < 14
+      ) {
+        // Milky halo on edges — fade out, don't chop.
         const x = idx % width;
         const y = (idx - x) / width;
         const touchesEmpty =
@@ -166,15 +190,14 @@ async function prepareScaleCutout(
           (x + 1 < width && data[(idx + 1) * 4 + 3] < 20) ||
           (y > 0 && data[(idx - width) * 4 + 3] < 20) ||
           (y + 1 < height && data[(idx + width) * 4 + 3] < 20);
-        if (touchesEmpty) data[i + 3] = 0;
+        if (touchesEmpty) {
+          a = 0;
+          data[i + 3] = 0;
+        }
       }
 
-      if (data[i + 3] < 16) {
-        transparent += 1;
-        continue;
-      }
+      if (a < 16) continue;
 
-      data[i + 3] = 255;
       opaque += 1;
       const x = idx % width;
       const y = (idx - x) / width;
@@ -185,17 +208,17 @@ async function prepareScaleCutout(
     }
 
     if (opaque < total * 0.02 || maxX <= minX || maxY <= minY) {
-      return { src, width, height };
+      return { src: "", width: 1, height: 1 };
     }
 
     const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return { src, width, height };
+    if (!ctx) return { src: "", width: 1, height: 1 };
     ctx.putImageData(new ImageData(data, width, height), 0, 0);
 
-    const pad = 2;
+    const pad = 4;
     const sx = Math.max(0, minX - pad);
     const sy = Math.max(0, minY - pad);
     const sw = Math.min(width - sx, maxX - minX + pad * 2);
@@ -204,21 +227,25 @@ async function prepareScaleCutout(
     trimmed.width = sw;
     trimmed.height = sh;
     const tctx = trimmed.getContext("2d");
-    if (!tctx) return { src, width, height };
+    if (!tctx) return { src: "", width: 1, height: 1 };
+    tctx.imageSmoothingEnabled = true;
+    tctx.imageSmoothingQuality = "high";
     tctx.drawImage(canvas, sx, sy, sw, sh, 0, 0, sw, sh);
     return { src: trimmed.toDataURL("image/png"), width: sw, height: sh };
   } catch {
-    return { src, width: 1, height: 1 };
+    return { src: "", width: 1, height: 1 };
   }
 }
 
 /**
  * Prepare scale-guide product art: knock out plate, trim to silhouette.
+ * Only exposes the trimmed result — never the raw studio plate.
  */
 export function useKnockoutImage(
   src: string | null | undefined,
-  _options: KnockoutOptions = {}
+  options: KnockoutOptions = {},
 ): KnockoutResult {
+  const maxEdge = options.maxEdge ?? DEFAULT_MAX_EDGE;
   const [result, setResult] = useState<KnockoutResult>({
     src: src || "",
     width: 1,
@@ -233,20 +260,25 @@ export function useKnockoutImage(
     }
 
     let cancelled = false;
-    setResult((prev) => ({ ...prev, src, ready: false }));
+    setResult({ src: "", width: 1, height: 1, ready: false });
 
-    prepareScaleCutout(src)
+    prepareScaleCutout(src, maxEdge)
       .then((out) => {
-        if (!cancelled) setResult({ ...out, ready: true });
+        if (cancelled) return;
+        if (!out.src) {
+          setResult({ src: "", width: 1, height: 1, ready: false });
+          return;
+        }
+        setResult({ ...out, ready: true });
       })
       .catch(() => {
-        if (!cancelled) setResult({ src, width: 1, height: 1, ready: true });
+        if (!cancelled) setResult({ src: "", width: 1, height: 1, ready: false });
       });
 
     return () => {
       cancelled = true;
     };
-  }, [src]);
+  }, [src, maxEdge]);
 
   return result;
 }

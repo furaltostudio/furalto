@@ -1,15 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Ruler, ZoomIn, ZoomOut } from "lucide-react";
 import type { ProductImage, ProductSpec } from "@/types/product";
 import { ProductScaleCompare } from "@/components/product/ProductScaleCompare";
-import { catalogImageSrc } from "@/lib/images/catalog";
-import { getProductScaleMeasures } from "@/lib/products/scale";
+import { catalogImageSrc, galleryCutoutImageSrc, scaleCompareImageSrc } from "@/lib/images/catalog";
+import { getProductScaleMeasures, getScaleImageIndex } from "@/lib/products/scale";
 import { cn } from "@/lib/utils/cn";
 
 const FALLBACK_IMAGE = "/home/furnitures_five.jpeg";
+const CUTOUT_MAIN = { width: 1600, height: 1200 } as const;
+const CUTOUT_THUMB = { width: 400, height: 300 } as const;
+const CATALOG_MAIN = { width: 2000, height: 1500 } as const;
+const CATALOG_THUMB = { width: 480, height: 360 } as const;
 
 type ProductGalleryProps = {
   images: ProductImage[];
@@ -18,6 +22,16 @@ type ProductGalleryProps = {
   specs?: ProductSpec[];
   scaleImageIndex?: number | null;
 };
+
+function preloadImage(url: string) {
+  return new Promise<void>((resolve, reject) => {
+    const img = new window.Image();
+    img.onload = () => resolve();
+    img.onerror = () => reject(new Error("preload failed"));
+    img.decoding = "async";
+    img.src = url;
+  });
+}
 
 export function ProductGallery({
   images,
@@ -31,7 +45,12 @@ export function ProductGallery({
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
   const [failedSrcs, setFailedSrcs] = useState<Record<string, true>>({});
+  /** Cutout failed → keep fast catalog mat. */
+  const [cutoutFailed, setCutoutFailed] = useState<Record<string, true>>({});
+  /** Cutout URL ready in browser cache / decoded. */
+  const [cutoutReady, setCutoutReady] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
+  const prefetchedRef = useRef<Set<string>>(new Set());
 
   const scale = getProductScaleMeasures(specs);
   const scaleEnabled = scale.canCompare;
@@ -86,22 +105,138 @@ export function ProductGallery({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeIndex, goTo, isZoomed]);
 
-  const resolveSrc = (src: string, size: "main" | "thumb") => {
-    if (failedSrcs[src]) return FALLBACK_IMAGE;
-    return size === "main"
-      ? catalogImageSrc(src, { width: 1800, height: 1350 })
-      : catalogImageSrc(src, { width: 400, height: 300 });
-  };
+  const activeSrc = activeImage?.src;
 
-  const activeSrc = activeImage ? resolveSrc(activeImage.src, "main") : FALLBACK_IMAGE;
+  const fastSrc = useMemo(() => {
+    if (!activeSrc) return FALLBACK_IMAGE;
+    if (failedSrcs[activeSrc]) return FALLBACK_IMAGE;
+    return catalogImageSrc(activeSrc, CATALOG_MAIN);
+  }, [activeSrc, failedSrcs]);
+
+  const wantsCutout =
+    !isScaleSlide &&
+    activeIndex > 0 &&
+    Boolean(activeSrc) &&
+    !cutoutFailed[activeSrc!] &&
+    !failedSrcs[activeSrc!];
+
+  const cutoutSrc = useMemo(() => {
+    if (!wantsCutout || !activeSrc) return null;
+    return galleryCutoutImageSrc(activeSrc, CUTOUT_MAIN);
+  }, [wantsCutout, activeSrc]);
+
+  const markImageError = useCallback((src: string, index: number) => {
+    if (index > 0 && !cutoutFailed[src]) {
+      setCutoutFailed((current) => ({ ...current, [src]: true }));
+      return;
+    }
+    setFailedSrcs((current) => ({ ...current, [src]: true }));
+  }, [cutoutFailed]);
+
+  // Progressive: show fast catalog instantly, swap to cutout when decoded.
+  useEffect(() => {
+    if (!cutoutSrc || !activeSrc) {
+      setCutoutReady(false);
+      return;
+    }
+
+    let cancelled = false;
+    setCutoutReady(false);
+
+    preloadImage(cutoutSrc)
+      .then(() => {
+        if (!cancelled) setCutoutReady(true);
+      })
+      .catch(() => {
+        if (!cancelled) markImageError(activeSrc, activeIndex);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [cutoutSrc, activeSrc, activeIndex, markImageError]);
+
+  // Prefetch neighbors immediately; warm remaining cutouts when idle.
+  useEffect(() => {
+    const urlsFor = (indices: number[]) => {
+      const urls: string[] = [];
+      for (const index of indices) {
+        if (index <= 0 || index >= photoCount) continue;
+        const src = galleryImages[index]?.src;
+        if (!src || cutoutFailed[src] || failedSrcs[src]) continue;
+        const url = galleryCutoutImageSrc(src, CUTOUT_MAIN);
+        if (prefetchedRef.current.has(url)) continue;
+        prefetchedRef.current.add(url);
+        urls.push(url);
+      }
+      return urls;
+    };
+
+    const fire = (urls: string[]) => {
+      urls.forEach((url) => {
+        void preloadImage(url).catch(() => undefined);
+      });
+    };
+
+    fire(urlsFor([activeIndex + 1, activeIndex - 1, activeIndex]));
+
+    const warmRest = () => {
+      const rest: number[] = [];
+      for (let i = 1; i < photoCount; i += 1) rest.push(i);
+      fire(urlsFor(rest));
+
+      // Warm scale cutout early — AI removal is the slow path when Size opens.
+      if (scaleEnabled) {
+        const scaleIdx = getScaleImageIndex(productSlug, scaleImageIndex);
+        const scaleSrc =
+          galleryImages[scaleIdx]?.src ||
+          galleryImages[1]?.src ||
+          galleryImages[0]?.src;
+        if (scaleSrc) {
+          const scaleUrl = scaleCompareImageSrc(scaleSrc, { width: 1400, height: 1100 });
+          if (!prefetchedRef.current.has(scaleUrl)) {
+            prefetchedRef.current.add(scaleUrl);
+            void preloadImage(scaleUrl).catch(() => undefined);
+          }
+        }
+      }
+    };
+
+    const canIdle =
+      typeof window !== "undefined" &&
+      typeof window.requestIdleCallback === "function";
+    const idleId = canIdle
+      ? window.requestIdleCallback(warmRest, { timeout: 2500 })
+      : window.setTimeout(warmRest, 900);
+
+    return () => {
+      if (canIdle && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
+    };
+  }, [activeIndex, photoCount, galleryImages, cutoutFailed, failedSrcs, scaleEnabled, productSlug, scaleImageIndex]);
+
   const showThumbs = slideCount > 1;
+  const zoomStyle = isZoomed
+    ? {
+        transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
+        transform: "scale(2)",
+      }
+    : undefined;
 
   return (
     <div className={cn("product-gallery", showThumbs && "has-thumbs")}>
       {showThumbs ? (
         <div className="product-gallery-thumbs" role="tablist" aria-label={`${productName} images`}>
           {galleryImages.map((image, index) => {
-            const thumbSrc = resolveSrc(image.src, "thumb");
+            const useCutoutThumb = index > 0 && !cutoutFailed[image.src] && !failedSrcs[image.src];
+            const thumbSrc = failedSrcs[image.src]
+              ? FALLBACK_IMAGE
+              : useCutoutThumb
+                ? galleryCutoutImageSrc(image.src, CUTOUT_THUMB)
+                : catalogImageSrc(image.src, CATALOG_THUMB);
             return (
               <button
                 key={`${image.src}-${index}`}
@@ -111,7 +246,8 @@ export function ProductGallery({
                 aria-label={`View image ${index + 1}`}
                 className={cn(
                   "product-gallery-thumb",
-                  index === activeIndex && "product-gallery-thumb-active"
+                  index === activeIndex && "product-gallery-thumb-active",
+                  useCutoutThumb && "is-cutout"
                 )}
                 onClick={() => goTo(index)}
               >
@@ -119,11 +255,16 @@ export function ProductGallery({
                   src={thumbSrc}
                   alt=""
                   width={320}
-                  height={320}
+                  height={240}
                   sizes="96px"
                   unoptimized
+                  loading={index <= 2 ? "eager" : "lazy"}
                   className="product-gallery-thumb-image"
                   onError={() => {
+                    if (useCutoutThumb) {
+                      setCutoutFailed((current) => ({ ...current, [image.src]: true }));
+                      return;
+                    }
                     setFailedSrcs((current) => ({ ...current, [image.src]: true }));
                   }}
                 />
@@ -158,7 +299,9 @@ export function ProductGallery({
           className={cn(
             "product-gallery-main",
             isZoomed && !isScaleSlide && "product-gallery-main-zoomed",
-            isScaleSlide && "product-gallery-main-scale"
+            isScaleSlide && "product-gallery-main-scale",
+            wantsCutout && "product-gallery-main-cutout",
+            wantsCutout && cutoutReady && "is-cutout-ready"
           )}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setIsZoomed(false)}
@@ -184,13 +327,48 @@ export function ProductGallery({
               kind={scale.kind}
               scaleImageIndex={scaleImageIndex}
             />
+          ) : wantsCutout && cutoutSrc ? (
+            <div className="product-gallery-cutout-stage" key={activeImage?.src}>
+              {/* Fast studio mat first — always instant */}
+              <Image
+                src={fastSrc}
+                alt=""
+                width={CATALOG_MAIN.width}
+                height={CATALOG_MAIN.height}
+                sizes="(min-width: 1024px) 52vw, 100vw"
+                className={cn(
+                  "product-gallery-image product-gallery-image-preview",
+                  cutoutReady && "is-hidden"
+                )}
+                unoptimized
+                priority={activeIndex === 1}
+                style={zoomStyle}
+              />
+              {/* AI cutout — contact shadow via drop-shadow follows silhouette */}
+              <Image
+                src={cutoutSrc}
+                alt={activeImage?.alt || productName}
+                width={CUTOUT_MAIN.width}
+                height={CUTOUT_MAIN.height}
+                sizes="(min-width: 1024px) 52vw, 100vw"
+                className={cn(
+                  "product-gallery-image product-gallery-image-cutout",
+                  cutoutReady && "is-ready"
+                )}
+                unoptimized
+                style={zoomStyle}
+                onError={() => {
+                  if (activeImage?.src) markImageError(activeImage.src, activeIndex);
+                }}
+              />
+            </div>
           ) : (
             <Image
-              src={activeSrc}
+              src={fastSrc}
               alt={activeImage?.alt || productName}
-              width={1800}
-              height={1350}
-              priority
+              width={CATALOG_MAIN.width}
+              height={CATALOG_MAIN.height}
+              priority={activeIndex === 0}
               sizes="(min-width: 1024px) 52vw, 100vw"
               className="product-gallery-image"
               unoptimized
@@ -199,14 +377,7 @@ export function ProductGallery({
                   setFailedSrcs((current) => ({ ...current, [activeImage.src]: true }));
                 }
               }}
-              style={
-                isZoomed
-                  ? {
-                      transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                      transform: "scale(2)",
-                    }
-                  : undefined
-              }
+              style={zoomStyle}
             />
           )}
 

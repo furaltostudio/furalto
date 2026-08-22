@@ -129,9 +129,13 @@ export async function fetchRelatedProducts(slug: string): Promise<Product[]> {
 
 export async function fetchProductSlugs(): Promise<string[]> {
   try {
-    const products = await fetchProducts({ limit: 500 });
-    return products.map((product) => product.slug);
-  } catch {
+    const data = await fetchApi<{ slugs: string[] }>("/api/v1/products/slugs");
+    return Array.isArray(data.slugs) ? data.slugs.filter(Boolean) : [];
+  } catch (error) {
+    console.warn(
+      "[catalog] fetchProductSlugs failed:",
+      error instanceof Error ? error.message : error
+    );
     return [];
   }
 }

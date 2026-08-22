@@ -8,7 +8,8 @@ const pickCache = new Map<
 
 export function isSpecSheetImage(img: ProductImage) {
   const text = `${img.alt} ${img.src}`;
-  if (/\/5[_-][^/?#]+\.png(?:\?|$)/i.test(img.src)) return true;
+  // Catalog dimension boards are usually 5_*.png or 8_*.png (not lifestyle WebPs).
+  if (/\/(?:5|8)[_-][^/?#]+\.png(?:\?|$)/i.test(img.src)) return true;
   return /spec|dimension|measure|sheet|diagram|blueprint|infographic/i.test(text);
 }
 

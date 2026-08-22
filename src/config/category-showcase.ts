@@ -1,4 +1,5 @@
 import { PRIMARY_NAV_SLUGS, shopNavigation } from "@/config/navigation";
+import type { PageImage } from "@/config/images";
 
 export type CategoryShowcaseItem = {
   id: string;
@@ -9,6 +10,27 @@ export type CategoryShowcaseItem = {
   imageAlt: string;
   imageWidth: number;
   imageHeight: number;
+};
+
+const unsplash = (id: string, alt: string, width = 1536, height = 1024): PageImage => ({
+  src: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&h=${height}&q=85`,
+  alt,
+  width,
+  height,
+});
+
+/** Homepage category cards — curated plates distinct from generic collection heroes. */
+const showcaseImages: Partial<
+  Record<(typeof PRIMARY_NAV_SLUGS)[number], PageImage>
+> = {
+  sofas: unsplash(
+    "1776186243326-1d467b258232",
+    "Italian-inspired curved designer sofa in a minimalist luxury living room",
+  ),
+  beds: unsplash(
+    "1616594039964-ae9021a400a0",
+    "Luxury upholstered bed in an elegant master suite with layered linens",
+  ),
 };
 
 export const categoryShowcaseSection = {
@@ -34,10 +56,10 @@ export const categoryShowcaseItems: CategoryShowcaseItem[] = PRIMARY_SHOWCASE_SL
         label: item.label,
         href: item.href,
         cta: `Discover ${item.label}`,
-        image: item.featured.image,
-        imageAlt: item.featured.imageAlt,
-        imageWidth: 1536,
-        imageHeight: 1024,
+        image: showcaseImages[slug]?.src ?? item.featured.image,
+        imageAlt: showcaseImages[slug]?.alt ?? item.featured.imageAlt,
+        imageWidth: showcaseImages[slug]?.width ?? 1536,
+        imageHeight: showcaseImages[slug]?.height ?? 1024,
       },
     ];
   },

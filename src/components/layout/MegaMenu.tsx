@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { getCollectionEmptyState } from "@/config/collections";
 import type { NavItem } from "@/config/navigation";
 import { getCollectionSlugFromHref } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
-import { catalogImageSrc, editorialImageSrc } from "@/lib/images/catalog";
+import { editorialImageSrc, megaMenuImageSrc } from "@/lib/images/catalog";
 import { pickListingImagesSync } from "@/lib/images/pickListingImage";
 import { formatInrPrice, formatProductName } from "@/lib/products/format";
 import type { Product } from "@/types/product";
@@ -158,6 +159,22 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
     };
   }, [category, key]);
 
+  // Warm first-row Cloudinary thumbs as soon as products arrive.
+  useEffect(() => {
+    if (products.length === 0 || typeof window === "undefined") return;
+
+    const warm = products.slice(0, 6);
+    for (const product of warm) {
+      const listing =
+        pickListingImagesSync(product).primary || product.images?.[0];
+      if (!listing?.src) continue;
+      const url = megaMenuImageSrc(listing.src, { width: 800, height: 600 });
+      const img = new window.Image();
+      img.decoding = "async";
+      img.src = url;
+    }
+  }, [products]);
+
   const syncCarousel = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -205,7 +222,7 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
     : null;
   const primaryImage = spotlightListing || spotlight?.images?.[0] || null;
   const editorialSrc = primaryImage?.src
-    ? editorialImageSrc(primaryImage.src)
+    ? editorialImageSrc(primaryImage.src, { width: 800, height: 1060 })
     : item.featured?.image || null;
   const editorialAlt =
     primaryImage?.alt ||
@@ -230,6 +247,8 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
     setIsEditorialReady(false);
     setSpotlightIndex(index);
   };
+
+  const emptyState = getCollectionEmptyState(category);
 
   return (
     <div className="mega-menu-panel mega-menu-panel--products" role="region" aria-label={`${item.label} products`}>
@@ -277,9 +296,19 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
             <p className="mega-menu-products-status">{error}</p>
           ) : products.length === 0 ? (
             <div className="mega-menu-products-empty">
-              <p className="mega-menu-products-status">New pieces are arriving soon.</p>
-              <Link href={item.href} className="mega-menu-view-more">
-                Browse {item.label}
+              <p className="mega-menu-products-status">
+                {emptyState?.kicker ?? "New pieces are arriving soon."}
+              </p>
+              {emptyState ? (
+                <p className="mega-menu-products-status mega-menu-products-status--sub">
+                  {emptyState.copy}
+                </p>
+              ) : null}
+              <Link
+                href={emptyState?.primaryCta.href ?? item.href}
+                className="mega-menu-view-more"
+              >
+                {emptyState?.primaryCta.label ?? `Browse ${item.label}`}
               </Link>
             </div>
           ) : (
@@ -296,7 +325,7 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
                       pickListingImagesSync(product).primary ||
                       product.images?.[0];
                     const imageSrc = listingImage?.src
-                      ? catalogImageSrc(listingImage.src, { width: 1200, height: 900 })
+                      ? megaMenuImageSrc(listingImage.src, { width: 800, height: 600 })
                       : null;
 
                     return (
@@ -321,6 +350,7 @@ function ProductMegaMenu({ item, category }: { item: NavItem; category: string }
                                   fill
                                   sizes="(max-width: 900px) 42vw, 16rem"
                                   unoptimized
+                                  priority={index < 4}
                                   className="mega-menu-product-image"
                                 />
                               ) : null}

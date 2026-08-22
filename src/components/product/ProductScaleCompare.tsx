@@ -136,16 +136,15 @@ export function ProductScaleCompare({
     () => pickStudioImage(images, productSlug, kind, scaleImageIndex),
     [images, productSlug, kind, scaleImageIndex]
   );
+  const SCALE_CUTOUT = { width: 1400, height: 1100 } as const;
   const rawProductSrc =
     curatedCutoutSrc ||
     (studioImage
-      ? scaleCompareImageSrc(studioImage.src, { width: 1400, height: 1100 })
+      ? scaleCompareImageSrc(studioImage.src, SCALE_CUTOUT)
       : "");
 
-  // Curated assets are already tight — still run prepare for fringe scrub when local.
-  // Live gallery shots always go through knockout + trim.
-  const liveCutout = useKnockoutImage(rawProductSrc || null);
-  const cutout = liveCutout;
+  // Higher maxEdge keeps fabric/edges crisp when the silhouette is scaled up.
+  const cutout = useKnockoutImage(rawProductSrc || null, { maxEdge: 1400 });
 
   useEffect(() => {
     const el = stageRef.current;
@@ -472,12 +471,12 @@ export function ProductScaleCompare({
                   )}
                   style={{ width: `${productW}px`, height: `${productH}px` }}
                 >
-                  {cutout.src ? (
+                  {cutout.src && cutout.ready ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={cutout.src}
                       alt={productName}
-                      className="product-scale-cutout"
+                      className="product-scale-cutout is-ready"
                       draggable={false}
                     />
                   ) : null}

@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import { PageHeroWithImage } from "@/components/shared/PageHeroWithImage";
 import { CollectionProducts } from "@/components/product/CollectionProducts";
-import { getCollectionMeta } from "@/config/collections";
+import { Reveal } from "@/components/ui/Reveal";
+import { getCollectionEmptyState, getCollectionMeta } from "@/config/collections";
 import { getCategoryImage } from "@/config/images";
 import { getCollectionCategoryMeta } from "@/lib/content/siteContent";
 import {
@@ -68,6 +70,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     page: 1,
   });
   const heroImage = getCategoryImage(category, meta.title);
+  const emptyState = getCollectionEmptyState(category);
 
   return (
     <>
@@ -82,7 +85,28 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       <section className="collections-products">
         {catalog.pagination.total === 0 ? (
           <div className="collections-products-inner">
-            <p className="collections-empty">No products in this collection yet.</p>
+            {emptyState ? (
+              <Reveal className="collections-close collections-close--empty">
+                <p className="collections-close-kicker">{emptyState.kicker}</p>
+                <h2 className="collections-close-title">{emptyState.title}</h2>
+                <p className="collections-close-copy">{emptyState.copy}</p>
+                <div className="collections-close-actions">
+                  <Link href={emptyState.primaryCta.href} className="collections-close-primary">
+                    {emptyState.primaryCta.label}
+                  </Link>
+                  {emptyState.secondaryCta ? (
+                    <Link
+                      href={emptyState.secondaryCta.href}
+                      className="collections-close-secondary"
+                    >
+                      {emptyState.secondaryCta.label}
+                    </Link>
+                  ) : null}
+                </div>
+              </Reveal>
+            ) : (
+              <p className="collections-empty">No products in this collection yet.</p>
+            )}
           </div>
         ) : (
           <CollectionProducts

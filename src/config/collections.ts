@@ -74,6 +74,36 @@ export function getCollectionMeta(category: string, _subcategory?: string): Coll
   );
 }
 
+export type CollectionEmptyState = {
+  kicker: string;
+  title: string;
+  copy: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+};
+
+const comingSoonEmptyStates: Record<string, CollectionEmptyState> = {
+  chairs: {
+    kicker: "Coming Soon",
+    title: "Chairs collection",
+    copy: "We're curating sculptural seating for living rooms, dining, and quiet corners. Visit our Rohini design studio or explore bespoke options in the meantime.",
+    primaryCta: { label: "Explore Bespoke", href: "/custom" },
+    secondaryCta: { label: "Browse Sofas", href: "/collections/sofas" },
+  },
+  dining: {
+    kicker: "Coming Soon",
+    title: "Dining sets collection",
+    copy: "Tables and seating for intimate dinners and grand gatherings are on the way. Book a studio visit or start a bespoke dining commission.",
+    primaryCta: { label: "Book a visit", href: "/appointments" },
+    secondaryCta: { label: "Explore Bespoke", href: "/custom" },
+  },
+};
+
+/** Rich empty state for categories without catalogue data yet. */
+export function getCollectionEmptyState(category: string): CollectionEmptyState | null {
+  return comingSoonEmptyStates[category] ?? null;
+}
+
 export const inspirationRooms: Record<
   string,
   { title: string; description: string; eyebrow: string }

@@ -32,9 +32,9 @@ type ProductCardProps = {
 function resolveCardImage(src: string, variant: ProductCardProps["variant"]) {
   if (variant === "carousel") {
     // No white pad — keeps the real studio plate so we can match the mat color.
-    return carouselImageSrc(src, { width: 1600, height: 1067 });
+    return carouselImageSrc(src, { width: 1800, height: 1200 });
   }
-  return catalogImageSrc(src);
+  return catalogImageSrc(src, { width: 1600, height: 1200 });
 }
 
 export function ProductCard({

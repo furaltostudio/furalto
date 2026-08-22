@@ -6,32 +6,88 @@ type CatalogImageOptions = {
 };
 
 /**
+ * Rebuild a Cloudinary delivery URL with a fresh transform chain.
+ * Strips prior transforms so AI ops like e_background_removal see the raw asset.
+ */
+function withCloudinaryTransform(src: string, transform: string): string {
+  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
+    return src;
+  }
+
+  const marker = CLOUDINARY_UPLOAD;
+  const at = src.indexOf(marker);
+  if (at < 0) return src;
+
+  const prefix = src.slice(0, at + marker.length);
+  const rest = src.slice(at + marker.length);
+  // .../upload/v123/folder/file.jpg  OR  .../upload/c_fit,.../v123/folder/file.jpg
+  const versionAtStart = rest.match(/^(v\d+\/.+)$/);
+  if (versionAtStart) {
+    return `${prefix}${transform}/${versionAtStart[1]}`;
+  }
+  const versionInPath = rest.match(/\/(v\d+\/.+)$/);
+  if (versionInPath) {
+    return `${prefix}${transform}/${versionInPath[1]}`;
+  }
+
+  // No version segment — drop leading transform tokens (contain _, =, or commas).
+  const parts = rest.split("/");
+  let start = 0;
+  while (
+    start < parts.length - 1 &&
+    /[,_=]|^[a-z]{1,4}_/i.test(parts[start] || "")
+  ) {
+    start += 1;
+  }
+  const publicId = parts.slice(start).join("/");
+  return `${prefix}${transform}/${publicId}`;
+}
+
+/** Soft white mat + fit (never crop the piece). */
+function whiteMatFit(width: number, height: number) {
+  return `c_fit,w_${width},h_${height}/c_pad,b_rgb:FFFFFF,w_${width},h_${height}`;
+}
+
+/**
+ * Same family as About team photos (minus e_upscale — fails on large studio shots):
+ * best encode + strong sharpen for fabric / edge clarity.
+ */
+function detailQuality(width: number, height: number) {
+  return `${whiteMatFit(width, height)},q_auto:best,e_sharpen:60,f_auto`;
+}
+
+/**
+ * Listing / card quality — still sharp, slightly lighter than PDP.
+ */
+function listingQuality(width: number, height: number, fit: "pad" | "limit" | "mat") {
+  if (fit === "limit") {
+    return `c_limit,w_${width},h_${height},q_auto:best,e_sharpen:50,f_auto`;
+  }
+  if (fit === "pad") {
+    return `c_pad,b_rgb:FFFFFF,w_${width},h_${height},q_auto:best,e_sharpen:50,f_auto`;
+  }
+  return `${whiteMatFit(width, height)},q_auto:best,e_sharpen:55,f_auto`;
+}
+
+/**
  * Normalize Cloudinary product shots for catalog/PDP tiles.
  * Fit the full photo into a white mat — avoid e_trim (eats light upholstery / lifestyle).
  */
 export function catalogImageSrc(
   src: string,
-  { width = 1600, height = 1200 }: CatalogImageOptions = {},
+  { width = 2000, height = 1500 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
-
-  const transform = `c_fit,w_${width},h_${height}/c_pad,b_rgb:FFFFFF,w_${width},h_${height},q_auto:good,f_auto`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+  return withCloudinaryTransform(src, detailQuality(width, height));
 }
 
-/** Tall atelier frame — full piece visible, no aggressive trim. */
+/**
+ * Tall atelier frame — full piece visible, no aggressive trim.
+ */
 export function editorialImageSrc(
   src: string,
   { width = 900, height = 1200 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
-
-  const transform = `c_fit,w_${width},h_${height}/c_pad,b_rgb:FFFFFF,w_${width},h_${height},q_auto:good,f_auto`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+  return withCloudinaryTransform(src, detailQuality(width, height));
 }
 
 /**
@@ -40,31 +96,45 @@ export function editorialImageSrc(
  */
 export function galleryImageSrc(
   src: string,
-  { width = 1600, height = 1067 }: CatalogImageOptions = {},
+  { width = 1800, height = 1200 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
-
-  const transform = `c_pad,b_rgb:FFFFFF,w_${width},h_${height},q_auto:good,f_auto`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+  return withCloudinaryTransform(src, listingQuality(width, height, "pad"));
 }
 
 /**
- * Scale-guide source — Cloudinary AI cutout when available, then fit.
- * Client only trims transparent padding afterwards.
+ * Scale-guide cutout — modest size for AI + client trim speed.
  */
 export function scaleCompareImageSrc(
   src: string,
+  { width = 1400, height = 1100 }: CatalogImageOptions = {},
+): string {
+  const transform = `e_background_removal/c_fit,w_${width},h_${height},f_png,q_auto:best`;
+  return withCloudinaryTransform(src, transform);
+}
+
+/**
+ * PDP gallery cutout for non-primary studio shots (transparent PNG).
+ * Keep hero/lifestyle (index 0) on catalogImageSrc instead.
+ */
+export function galleryCutoutImageSrc(
+  src: string,
   { width = 1600, height = 1200 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
+  const transform = `e_background_removal/c_fit,w_${width},h_${height},f_png,q_auto:best,e_sharpen:50`;
+  return withCloudinaryTransform(src, transform);
+}
 
-  // e_background_removal needs a clean public id (no prior transforms in path).
-  const transform = `e_background_removal/c_fit,w_${width},h_${height},f_png`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+/**
+ * Navbar mega-menu tiles — small but sharp (cards ~16rem / retina).
+ */
+export function megaMenuImageSrc(
+  src: string,
+  { width = 800, height = 600 }: CatalogImageOptions = {},
+): string {
+  return withCloudinaryTransform(
+    src,
+    `c_limit,w_${width},h_${height},q_auto:best,e_sharpen:45,f_auto`,
+  );
 }
 
 /** Shared atelier ground — matches white studio mats on collection tiles. */
@@ -75,15 +145,9 @@ export const GALLERY_STAGE_HEX = "FFFFFF";
  */
 export function mosaicImageSrc(
   src: string,
-  { width = 1800, height = 1350 }: CatalogImageOptions = {},
+  { width = 2000, height = 1500 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
-
-  // c_fit scales the whole image into the box; c_pad fills the remaining mat.
-  const transform = `c_fit,w_${width},h_${height}/c_pad,b_rgb:${GALLERY_STAGE_HEX},w_${width},h_${height},q_auto:good,f_auto`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+  return withCloudinaryTransform(src, listingQuality(width, height, "mat"));
 }
 
 /**
@@ -93,12 +157,7 @@ export function mosaicImageSrc(
  */
 export function carouselImageSrc(
   src: string,
-  { width = 1600, height = 1067 }: CatalogImageOptions = {},
+  { width = 1800, height = 1200 }: CatalogImageOptions = {},
 ): string {
-  if (!src.includes("res.cloudinary.com") || !src.includes(CLOUDINARY_UPLOAD)) {
-    return src;
-  }
-
-  const transform = `c_limit,w_${width},h_${height},q_auto:good,f_auto`;
-  return src.replace(CLOUDINARY_UPLOAD, `${CLOUDINARY_UPLOAD}${transform}/`);
+  return withCloudinaryTransform(src, listingQuality(width, height, "limit"));
 }

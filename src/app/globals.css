@@ -2058,6 +2058,12 @@ body {
   color: var(--muted);
 }
 
+.mega-menu-products-status--sub {
+  max-width: 28rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
 .mega-menu-products-empty {
   display: flex;
   flex-direction: column;
@@ -4697,7 +4703,7 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--border-subtle);
+  border: 0;
 }
 
 .product-gallery-main-zoomed {
@@ -6687,6 +6693,12 @@ body {
   padding: 2.75rem 1.25rem 0;
   border-top: 1px solid rgba(13, 21, 32, 0.08);
   text-align: center;
+}
+
+.collections-close--empty {
+  margin: 2.5rem auto 4rem;
+  padding: 3rem 1.25rem;
+  border-top: none;
 }
 
 .collections-close-kicker {
@@ -14167,9 +14179,7 @@ button.is-loading,
   background:
     radial-gradient(62% 55% at 50% 46%, rgba(250, 246, 240, 0.55) 0%, #fff 78%);
   aspect-ratio: 4 / 3;
-  box-shadow:
-    inset 0 0 0 1px rgba(232, 227, 219, 0.75),
-    0 28px 70px rgba(13, 21, 32, 0.06);
+  box-shadow: 0 28px 70px rgba(13, 21, 32, 0.06);
   cursor: zoom-in;
 }
 
@@ -14206,6 +14216,96 @@ button.is-loading,
   transform: scale(1.04);
 }
 
+.product-gallery-main-cutout {
+  /* Match primary gallery plate — clean white, not cream paper */
+  background:
+    radial-gradient(62% 55% at 50% 46%, rgba(250, 246, 240, 0.35) 0%, #fff 78%);
+}
+
+.product-gallery-main-cutout::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 70% at 50% 100%, rgba(13, 21, 32, 0.035), transparent 55%);
+}
+
+.product-gallery-cutout-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+}
+
+.product-gallery-image-preview,
+.product-gallery-image-cutout {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.product-gallery-image-preview {
+  z-index: 1;
+  padding: 5% 6%;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+.product-gallery-image-preview.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-gallery-image-cutout {
+  z-index: 2;
+  /* Even padding so silhouette sits naturally; shadow comes from drop-shadow */
+  padding: 4% 5% 6%;
+  opacity: 0;
+  /* Contact shadow hugs the PNG alpha — same width as product, right under feet */
+  filter:
+    drop-shadow(0 1px 1px rgba(13, 21, 32, 0.18))
+    drop-shadow(0 6px 8px rgba(13, 21, 32, 0.12))
+    drop-shadow(0 14px 18px rgba(13, 21, 32, 0.06));
+  transition:
+    opacity 0.4s ease,
+    transform 0.7s var(--ease-premium, cubic-bezier(0.22, 1, 0.36, 1)),
+    filter 0.35s ease;
+}
+
+.product-gallery-image-cutout.is-ready {
+  opacity: 1;
+}
+
+.product-gallery-main-zoomed .product-gallery-image-cutout {
+  filter:
+    drop-shadow(0 1px 1px rgba(13, 21, 32, 0.2))
+    drop-shadow(0 8px 10px rgba(13, 21, 32, 0.14))
+    drop-shadow(0 18px 22px rgba(13, 21, 32, 0.07));
+}
+
+.product-gallery-thumb.is-cutout {
+  background: #fff;
+}
+
+.product-gallery-thumb.is-cutout .product-gallery-thumb-image {
+  padding: 10% 8% 12%;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 1px 1px rgba(13, 21, 32, 0.16))
+    drop-shadow(0 3px 4px rgba(13, 21, 32, 0.1));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-gallery-image-preview,
+  .product-gallery-image-cutout {
+    transition: none;
+  }
+}
 
 .product-gallery-main-scale {
   cursor: default;
@@ -14759,14 +14859,20 @@ button.is-loading,
   display: block;
   width: 100%;
   height: 100%;
-  /* After trim, fill the true WÃ—H box so silhouette edges match the rulers. */
-  object-fit: fill;
+  /* Contain keeps silhouette proportions; bottom-align for floor contact. */
+  object-fit: contain;
   object-position: bottom center;
   filter: drop-shadow(0 8px 14px rgba(13, 21, 32, 0.12));
   user-select: none;
   -webkit-user-drag: none;
   background: transparent;
   image-rendering: auto;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.product-scale-cutout.is-ready {
+  opacity: 1;
 }
 
 .product-scale-chip {

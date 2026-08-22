@@ -18,6 +18,7 @@ export const API_ROUTES = {
     list: "/api/v1/products",
     search: "/api/v1/products/search",
     collections: "/api/v1/products/collections",
+    slugs: "/api/v1/products/slugs",
     detail: (slug: string) => `/api/v1/products/${slug}`,
     related: (slug: string) => `/api/v1/products/${slug}/related`,
   },
